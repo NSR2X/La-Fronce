@@ -4,9 +4,11 @@ import { MINISTRIES } from '../types';
 import { calculateIPM } from '../core/aggregators';
 import CardDeck from '../components/CardDeck';
 import { calculateTroikaDangerLevel, getTroikaLevelDescription } from '../core/troika';
+import VictoryScreen from '../components/VictoryScreen';
+import DefeatScreen from '../components/DefeatScreen';
 
 export default function Dashboard() {
-  const { gameState, currentReport, endMonth, loading, playCardAction, majorCardsPlayedThisMonth, communicationCardsPlayedThisMonth } = useGame();
+  const { gameState, currentReport, endMonth, loading, playCardAction, majorCardsPlayedThisMonth, communicationCardsPlayedThisMonth, startNewGame } = useGame();
 
   if (loading) {
     return (
@@ -35,6 +37,15 @@ export default function Dashboard() {
   const igg = currentReport?.igg || 50;
   const troikaLevel = calculateTroikaDangerLevel(gameState);
   const troikaStatus = getTroikaLevelDescription(troikaLevel);
+
+  // Show victory/defeat screens
+  if (gameState.status === 'victory') {
+    return <VictoryScreen gameState={gameState} onNewGame={startNewGame} />;
+  }
+
+  if (gameState.status === 'defeat') {
+    return <DefeatScreen gameState={gameState} onNewGame={startNewGame} />;
+  }
 
   return (
     <div className="min-h-screen p-6">

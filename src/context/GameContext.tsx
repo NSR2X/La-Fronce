@@ -17,6 +17,7 @@ interface GameContextType {
   currentReport: MonthlyReport | null;
   saveCurrentGame: () => Promise<void>;
   loadGameById: (saveId: string) => Promise<void>;
+  startNewGame: () => Promise<void>;
   loading: boolean;
   cardsPlayedThisMonth: number;
   majorCardsPlayedThisMonth: number;
@@ -141,6 +142,24 @@ export function GameProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const startNewGame = async () => {
+    // Create fresh game with default datasets
+    const selectedObjectives = defaultObjectivesData.objectives
+      .slice(0, 3)
+      .map(o => o.objectiveId);
+
+    const newGame = createNewGame(
+      defaultKpiData,
+      defaultCardsData,
+      defaultObjectivesData,
+      defaultDifficultyData,
+      selectedObjectives
+    );
+
+    await saveGame(newGame);
+    setGameState(newGame);
+  };
+
   return (
     <GameContext.Provider
       value={{
@@ -151,6 +170,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
         currentReport,
         saveCurrentGame,
         loadGameById,
+        startNewGame,
         loading,
         cardsPlayedThisMonth,
         majorCardsPlayedThisMonth,
