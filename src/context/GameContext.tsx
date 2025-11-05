@@ -1,7 +1,13 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import type { GameState, Card, MonthlyReport } from '../types';
-import { saveGame, loadGame } from '../data/db';
-import { playCard, advanceMonth, generateMonthlyReport } from '../core/gameState';
+import type { GameState, MonthlyReport } from '../types';
+import { saveGame, loadGame, listGames } from '../data/db';
+import { playCard, advanceMonth, generateMonthlyReport, createNewGame } from '../core/gameState';
+
+// Import default datasets
+import defaultKpiData from '../data/default-kpi.json';
+import defaultCardsData from '../data/default-cards.json';
+import defaultObjectivesData from '../data/default-objectives.json';
+import defaultDifficultyData from '../data/default-difficulty.json';
 
 interface GameContextType {
   gameState: GameState | null;
@@ -11,6 +17,7 @@ interface GameContextType {
   currentReport: MonthlyReport | null;
   saveCurrentGame: () => Promise<void>;
   loadGameById: (saveId: string) => Promise<void>;
+  loading: boolean;
 }
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -18,12 +25,55 @@ const GameContext = createContext<GameContextType | undefined>(undefined);
 export function GameProvider({ children }: { children: ReactNode }) {
   const [gameState, setGameState] = useState<GameState | null>(null);
   const [currentReport, setCurrentReport] = useState<MonthlyReport | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  // Auto-load or create default game on mount
+  useEffect(() => {
+    const initGame = async () => {
+      try {
+        // Check if there are any existing games
+        const existingGames = await listGames();
+
+        if (existingGames.length > 0) {
+          // Load the most recent game
+          const latestGame = existingGames[existingGames.length - 1];
+          setGameState(latestGame);
+        } else {
+          // Create a new default game with embedded datasets
+          const selectedObjectives = defaultObjectivesData.objectives
+            .slice(0, 3)
+            .map(o => o.objectiveId);
+
+          const newGame = createNewGame(
+            defaultKpiData,
+            defaultCardsData,
+            defaultObjectivesData,
+            defaultDifficultyData,
+            selectedObjectives
+          );
+
+          await saveGame(newGame);
+          setGameState(newGame);
+        }
+      } catch (error) {
+        console.error('Error initializing game:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    initGame();
+  }, []);
 
   // Generate report when game state changes
   useEffect(() => {
     if (gameState) {
-      const report = generateMonthlyReport(gameState);
-      setCurrentReport(report);
+      try {
+        const report = generateMonthlyReport(gameState);
+        setCurrentReport(report);
+      } catch (error) {
+        console.error('Error generating report:', error);
+      }
     }
   }, [gameState]);
 
@@ -74,6 +124,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
         currentReport,
         saveCurrentGame,
         loadGameById,
+        loading,
       }}
     >
       {children}

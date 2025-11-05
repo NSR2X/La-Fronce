@@ -1,0 +1,292 @@
+{
+  "version": "1.0.0",
+  "objectives": [
+    {
+      "objectiveId": "OBJ_Finances",
+      "label": "Stabiliser les finances",
+      "description": "Réduire la dette et le déficit à des niveaux soutenables.",
+      "checks": [
+        {
+          "kpiId": "debt_pct_gdp",
+          "comparator": "trend_down"
+        },
+        {
+          "kpiId": "deficit_pct_gdp",
+          "comparator": "<=",
+          "value": 3.0
+        }
+      ],
+      "evaluationWindow": {
+        "months": 6,
+        "method": "avg"
+      },
+      "difficultyTargets": {
+        "moderate": {
+          "requiredCount": 1
+        },
+        "severe": {
+          "requiredCount": 2
+        },
+        "extreme": {
+          "requiredCount": 2
+        }
+      }
+    },
+    {
+      "objectiveId": "OBJ_Employment",
+      "label": "Relancer l’emploi",
+      "description": "Baisser le chômage et augmenter l’emploi.",
+      "checks": [
+        {
+          "kpiId": "unemployment_rate",
+          "comparator": "<=",
+          "value": 8.0
+        },
+        {
+          "kpiId": "employment_rate",
+          "comparator": ">=",
+          "value": 68.0
+        }
+      ],
+      "evaluationWindow": {
+        "months": 6,
+        "method": "last"
+      },
+      "difficultyTargets": {
+        "moderate": {
+          "requiredCount": 1
+        },
+        "severe": {
+          "requiredCount": 2
+        },
+        "extreme": {
+          "requiredCount": 2
+        }
+      }
+    },
+    {
+      "objectiveId": "OBJ_Health_Access",
+      "label": "Santé accessible",
+      "description": "Améliorer l’accès aux soins.",
+      "checks": [
+        {
+          "kpiId": "avg_wait_days",
+          "comparator": "<=",
+          "value": 12
+        },
+        {
+          "kpiId": "unmet_care_rate",
+          "comparator": "<=",
+          "value": 7.0
+        }
+      ],
+      "evaluationWindow": {
+        "months": 6,
+        "method": "avg"
+      },
+      "difficultyTargets": {
+        "moderate": {
+          "requiredCount": 1
+        },
+        "severe": {
+          "requiredCount": 2
+        },
+        "extreme": {
+          "requiredCount": 2
+        }
+      }
+    },
+    {
+      "objectiveId": "OBJ_Energy_Sovereignty",
+      "label": "Souveraineté énergétique",
+      "description": "Augmenter le pilotable bas-carbone et réduire l’intensité CO₂.",
+      "checks": [
+        {
+          "kpiId": "share_nuclear_pct",
+          "comparator": ">=",
+          "value": 55
+        },
+        {
+          "kpiId": "co2_intensity_power",
+          "comparator": "<=",
+          "value": 220
+        }
+      ],
+      "evaluationWindow": {
+        "months": 6,
+        "method": "avg"
+      },
+      "difficultyTargets": {
+        "moderate": {
+          "requiredCount": 1
+        },
+        "severe": {
+          "requiredCount": 2
+        },
+        "extreme": {
+          "requiredCount": 2
+        }
+      }
+    },
+    {
+      "objectiveId": "OBJ_Education_Fundamentals",
+      "label": "Fondamentaux éducatifs",
+      "description": "Hausse de la maîtrise des fondamentaux et baisse de l’abandon.",
+      "checks": [
+        {
+          "kpiId": "literacy_rate",
+          "comparator": ">=",
+          "value": 90
+        },
+        {
+          "kpiId": "dropout_rate",
+          "comparator": "<=",
+          "value": 8.0
+        }
+      ],
+      "evaluationWindow": {
+        "months": 6,
+        "method": "trend"
+      },
+      "difficultyTargets": {
+        "moderate": {
+          "requiredCount": 1
+        },
+        "severe": {
+          "requiredCount": 2
+        },
+        "extreme": {
+          "requiredCount": 2
+        }
+      }
+    },
+    {
+      "objectiveId": "OBJ_Social_Cohesion",
+      "label": "Cohésion sociale",
+      "description": "Réduire pauvreté et inégalités.",
+      "checks": [
+        {
+          "kpiId": "poverty_rate",
+          "comparator": "<=",
+          "value": 13.5
+        },
+        {
+          "kpiId": "gini_index",
+          "comparator": "<=",
+          "value": 0.3
+        }
+      ],
+      "evaluationWindow": {
+        "months": 6,
+        "method": "avg"
+      },
+      "difficultyTargets": {
+        "moderate": {
+          "requiredCount": 1
+        },
+        "severe": {
+          "requiredCount": 2
+        },
+        "extreme": {
+          "requiredCount": 2
+        }
+      }
+    },
+    {
+      "objectiveId": "OBJ_Housing",
+      "label": "Logement",
+      "description": "Produire plus et mieux, réduire la précarité énergétique.",
+      "checks": [
+        {
+          "kpiId": "housing_starts",
+          "comparator": ">=",
+          "value": 320000
+        },
+        {
+          "kpiId": "energy_poverty_rate",
+          "comparator": "<=",
+          "value": 10.0
+        }
+      ],
+      "evaluationWindow": {
+        "months": 6,
+        "method": "avg"
+      },
+      "difficultyTargets": {
+        "moderate": {
+          "requiredCount": 1
+        },
+        "severe": {
+          "requiredCount": 2
+        },
+        "extreme": {
+          "requiredCount": 2
+        }
+      }
+    },
+    {
+      "objectiveId": "OBJ_Transport_Safety",
+      "label": "Transports sûrs et fiables",
+      "description": "Améliorer la ponctualité et réduire la mortalité routière.",
+      "checks": [
+        {
+          "kpiId": "rail_punctuality_pct",
+          "comparator": ">=",
+          "value": 90
+        },
+        {
+          "kpiId": "traffic_deaths_per_million",
+          "comparator": "<=",
+          "value": 48
+        }
+      ],
+      "evaluationWindow": {
+        "months": 6,
+        "method": "avg"
+      },
+      "difficultyTargets": {
+        "moderate": {
+          "requiredCount": 1
+        },
+        "severe": {
+          "requiredCount": 2
+        },
+        "extreme": {
+          "requiredCount": 2
+        }
+      }
+    },
+    {
+      "objectiveId": "OBJ_Digital_Sovereignty",
+      "label": "Souveraineté numérique",
+      "description": "Étendre la fibre et réduire les incidents cyber.",
+      "checks": [
+        {
+          "kpiId": "fiber_coverage_pct",
+          "comparator": ">=",
+          "value": 90
+        },
+        {
+          "kpiId": "cyber_incidents_public_admin",
+          "comparator": "<=",
+          "value": 35
+        }
+      ],
+      "evaluationWindow": {
+        "months": 6,
+        "method": "avg"
+      },
+      "difficultyTargets": {
+        "moderate": {
+          "requiredCount": 1
+        },
+        "severe": {
+          "requiredCount": 2
+        },
+        "extreme": {
+          "requiredCount": 2
+        }
+      }
+    }
+  ]
+}

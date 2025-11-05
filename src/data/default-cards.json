@@ -1,0 +1,1525 @@
+{
+  "version": "1.0.0",
+  "cards": [
+    {
+      "cardId": "BUDGET_Economies_State",
+      "type": "budget",
+      "ministries": [
+        "EconomyFinance"
+      ],
+      "title": "Plan d’économies de l’État",
+      "description": "Rationalisation des dépenses de fonctionnement et des opérateurs publics.",
+      "options": [
+        {
+          "label": "Léger",
+          "costs": {
+            "eur": -0.2,
+            "cp": -2,
+            "leg": 1,
+            "rj": 0,
+            "cm": 1
+          },
+          "lags": {
+            "start": 1,
+            "ramp": 2,
+            "duration": 6
+          },
+          "effects": [
+            {
+              "kpiId": "deficit_pct_gdp",
+              "delta": -0.4,
+              "interval": {
+                "min": -0.2,
+                "max": -0.48
+              },
+              "confidence": "med",
+              "profile": "linear"
+            },
+            {
+              "kpiId": "debt_pct_gdp",
+              "delta": -0.8,
+              "interval": {
+                "min": -0.4,
+                "max": -0.96
+              },
+              "confidence": "med",
+              "profile": "linear"
+            }
+          ]
+        },
+        {
+          "label": "Standard",
+          "costs": {
+            "eur": -0.5,
+            "cp": -4,
+            "leg": 0,
+            "rj": 0,
+            "cm": 0
+          },
+          "lags": {
+            "start": 1,
+            "ramp": 3,
+            "duration": 8
+          },
+          "effects": [
+            {
+              "kpiId": "deficit_pct_gdp",
+              "delta": -0.9,
+              "interval": {
+                "min": -0.45,
+                "max": -1.08
+              },
+              "confidence": "med",
+              "profile": "linear"
+            },
+            {
+              "kpiId": "debt_pct_gdp",
+              "delta": -1.5,
+              "interval": {
+                "min": -0.75,
+                "max": -1.7999999999999998
+              },
+              "confidence": "med",
+              "profile": "linear"
+            }
+          ]
+        },
+        {
+          "label": "Ambitieux",
+          "costs": {
+            "eur": -0.8,
+            "cp": -6,
+            "leg": -2,
+            "rj": 0,
+            "cm": -1
+          },
+          "lags": {
+            "start": 1,
+            "ramp": 4,
+            "duration": 10
+          },
+          "effects": [
+            {
+              "kpiId": "deficit_pct_gdp",
+              "delta": -1.5,
+              "interval": {
+                "min": -0.75,
+                "max": -1.7999999999999998
+              },
+              "confidence": "med",
+              "profile": "linear"
+            },
+            {
+              "kpiId": "debt_pct_gdp",
+              "delta": -2.5,
+              "interval": {
+                "min": -1.25,
+                "max": -3.0
+              },
+              "confidence": "med",
+              "profile": "linear"
+            }
+          ],
+          "risks": {
+            "probStrike": 0.15
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "BUDGET_Strategic_Invest",
+      "type": "budget",
+      "ministries": [
+        "EnergyClimateIndustry",
+        "DigitalSovereignty",
+        "Defense"
+      ],
+      "title": "Programme d’investissement stratégique",
+      "description": "Investir dans l’énergie, le numérique et la défense pour la compétitivité et la souveraineté.",
+      "options": [
+        {
+          "label": "Pilote",
+          "costs": {
+            "eur": -0.3,
+            "cp": -1,
+            "leg": 0,
+            "rj": 0,
+            "cm": 1
+          },
+          "lags": {
+            "start": 1,
+            "ramp": 4,
+            "duration": 12
+          },
+          "effects": [
+            {
+              "kpiId": "share_nuclear_pct",
+              "delta": 2,
+              "interval": {
+                "min": 1.0,
+                "max": 2.4
+              },
+              "confidence": "med",
+              "profile": "sigmoid"
+            },
+            {
+              "kpiId": "readiness_index",
+              "delta": 2,
+              "interval": {
+                "min": 1.0,
+                "max": 2.4
+              },
+              "confidence": "med",
+              "profile": "sigmoid"
+            },
+            {
+              "kpiId": "fiber_coverage_pct",
+              "delta": 3,
+              "interval": {
+                "min": 1.5,
+                "max": 3.5999999999999996
+              },
+              "confidence": "med",
+              "profile": "sigmoid"
+            }
+          ]
+        },
+        {
+          "label": "Standard",
+          "costs": {
+            "eur": -0.7,
+            "cp": -2,
+            "leg": 0,
+            "rj": 0,
+            "cm": 2
+          },
+          "lags": {
+            "start": 1,
+            "ramp": 6,
+            "duration": 18
+          },
+          "effects": [
+            {
+              "kpiId": "share_nuclear_pct",
+              "delta": 4,
+              "interval": {
+                "min": 2.0,
+                "max": 4.8
+              },
+              "confidence": "med",
+              "profile": "sigmoid"
+            },
+            {
+              "kpiId": "readiness_index",
+              "delta": 3,
+              "interval": {
+                "min": 1.5,
+                "max": 3.5999999999999996
+              },
+              "confidence": "med",
+              "profile": "sigmoid"
+            },
+            {
+              "kpiId": "fiber_coverage_pct",
+              "delta": 6,
+              "interval": {
+                "min": 3.0,
+                "max": 7.199999999999999
+              },
+              "confidence": "med",
+              "profile": "sigmoid"
+            }
+          ]
+        },
+        {
+          "label": "XXL",
+          "costs": {
+            "eur": -1.4,
+            "cp": -3,
+            "leg": -1,
+            "rj": 0,
+            "cm": 3
+          },
+          "lags": {
+            "start": 2,
+            "ramp": 8,
+            "duration": 24
+          },
+          "effects": [
+            {
+              "kpiId": "share_nuclear_pct",
+              "delta": 7,
+              "interval": {
+                "min": 3.5,
+                "max": 8.4
+              },
+              "confidence": "med",
+              "profile": "sigmoid"
+            },
+            {
+              "kpiId": "readiness_index",
+              "delta": 6,
+              "interval": {
+                "min": 3.0,
+                "max": 7.199999999999999
+              },
+              "confidence": "med",
+              "profile": "sigmoid"
+            },
+            {
+              "kpiId": "fiber_coverage_pct",
+              "delta": 10,
+              "interval": {
+                "min": 5.0,
+                "max": 12.0
+              },
+              "confidence": "med",
+              "profile": "sigmoid"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "BUDGET_Tax_Expenditures",
+      "type": "budget",
+      "ministries": [
+        "EconomyFinance"
+      ],
+      "title": "Révision des niches fiscales",
+      "description": "Réduire des dépenses fiscales peu efficaces.",
+      "options": [
+        {
+          "label": "Sélective",
+          "costs": {
+            "eur": 0.3,
+            "cp": -2,
+            "leg": -1,
+            "rj": 0,
+            "cm": 0
+          },
+          "lags": {
+            "start": 1,
+            "ramp": 2,
+            "duration": 6
+          },
+          "effects": [
+            {
+              "kpiId": "deficit_pct_gdp",
+              "delta": 0.5,
+              "interval": {
+                "min": 0.25,
+                "max": 0.6
+              },
+              "confidence": "med",
+              "profile": "linear"
+            }
+          ]
+        },
+        {
+          "label": "Large",
+          "costs": {
+            "eur": 0.6,
+            "cp": -4,
+            "leg": -2,
+            "rj": 0,
+            "cm": -1
+          },
+          "lags": {
+            "start": 1,
+            "ramp": 3,
+            "duration": 9
+          },
+          "effects": [
+            {
+              "kpiId": "deficit_pct_gdp",
+              "delta": 1.0,
+              "interval": {
+                "min": 0.5,
+                "max": 1.2
+              },
+              "confidence": "med",
+              "profile": "linear"
+            }
+          ],
+          "risks": {
+            "probStrike": 0.1
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "LAW_Apprenticeship",
+      "type": "law",
+      "ministries": [
+        "LaborEmployment",
+        "EducationResearch"
+      ],
+      "title": "Plan Apprentissage & Alternance",
+      "description": "Développer l’apprentissage pour les jeunes et les reconversions.",
+      "options": [
+        {
+          "label": "Bonus TPE",
+          "costs": {
+            "eur": -0.1,
+            "cp": -1,
+            "leg": 1,
+            "rj": 0,
+            "cm": 0
+          },
+          "lags": {
+            "start": 1,
+            "ramp": 4,
+            "duration": 12
+          },
+          "effects": [
+            {
+              "kpiId": "unemployment_rate",
+              "delta": -0.4,
+              "interval": {
+                "min": -0.2,
+                "max": -0.48
+              },
+              "confidence": "med",
+              "profile": "exp"
+            },
+            {
+              "kpiId": "employment_rate",
+              "delta": 0.6,
+              "interval": {
+                "min": 0.3,
+                "max": 0.72
+              },
+              "confidence": "med",
+              "profile": "exp"
+            }
+          ],
+          "synergies": [
+            "LAW_Labor_Charges"
+          ]
+        },
+        {
+          "label": "Filières technologiques",
+          "costs": {
+            "eur": -0.15,
+            "cp": -1,
+            "leg": 0,
+            "rj": 0,
+            "cm": 0
+          },
+          "lags": {
+            "start": 2,
+            "ramp": 6,
+            "duration": 12
+          },
+          "effects": [
+            {
+              "kpiId": "literacy_rate",
+              "delta": 0.5,
+              "interval": {
+                "min": 0.25,
+                "max": 0.6
+              },
+              "confidence": "med",
+              "profile": "exp"
+            },
+            {
+              "kpiId": "employment_rate",
+              "delta": 0.5,
+              "interval": {
+                "min": 0.25,
+                "max": 0.6
+              },
+              "confidence": "med",
+              "profile": "exp"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "LAW_Labor_Charges",
+      "type": "law",
+      "ministries": [
+        "LaborEmployment"
+      ],
+      "title": "Allègement charges TPE/PME",
+      "description": "Réduire le coût du travail ciblé TPE/PME.",
+      "options": [
+        {
+          "label": "TPE ciblé",
+          "costs": {
+            "eur": -0.2,
+            "cp": -1,
+            "leg": 0,
+            "rj": 0,
+            "cm": 1
+          },
+          "lags": {
+            "start": 1,
+            "ramp": 3,
+            "duration": 9
+          },
+          "effects": [
+            {
+              "kpiId": "employment_rate",
+              "delta": 0.8,
+              "interval": {
+                "min": 0.4,
+                "max": 0.96
+              },
+              "confidence": "med",
+              "profile": "linear"
+            },
+            {
+              "kpiId": "unemployment_rate",
+              "delta": -0.3,
+              "interval": {
+                "min": -0.15,
+                "max": -0.36
+              },
+              "confidence": "med",
+              "profile": "linear"
+            }
+          ],
+          "synergies": [
+            "LAW_Apprenticeship"
+          ]
+        },
+        {
+          "label": "TPE/PME large",
+          "costs": {
+            "eur": -0.4,
+            "cp": -2,
+            "leg": -1,
+            "rj": 0,
+            "cm": 0
+          },
+          "lags": {
+            "start": 1,
+            "ramp": 4,
+            "duration": 12
+          },
+          "effects": [
+            {
+              "kpiId": "employment_rate",
+              "delta": 1.2,
+              "interval": {
+                "min": 0.6,
+                "max": 1.44
+              },
+              "confidence": "med",
+              "profile": "linear"
+            },
+            {
+              "kpiId": "unemployment_rate",
+              "delta": -0.6,
+              "interval": {
+                "min": -0.3,
+                "max": -0.72
+              },
+              "confidence": "med",
+              "profile": "linear"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "LAW_Primary_Care",
+      "type": "law",
+      "ministries": [
+        "Health",
+        "DigitalSovereignty"
+      ],
+      "title": "Réforme soins primaires",
+      "description": "Renforcer la médecine de ville, CPTS, télémédecine.",
+      "options": [
+        {
+          "label": "CPTS/maisons de santé",
+          "costs": {
+            "eur": -0.2,
+            "cp": -1,
+            "leg": 1,
+            "rj": 0,
+            "cm": 0
+          },
+          "lags": {
+            "start": 1,
+            "ramp": 4,
+            "duration": 12
+          },
+          "effects": [
+            {
+              "kpiId": "avg_wait_days",
+              "delta": -2.0,
+              "interval": {
+                "min": -1.0,
+                "max": -2.4
+              },
+              "confidence": "med",
+              "profile": "sigmoid"
+            },
+            {
+              "kpiId": "unmet_care_rate",
+              "delta": -0.5,
+              "interval": {
+                "min": -0.25,
+                "max": -0.6
+              },
+              "confidence": "med",
+              "profile": "sigmoid"
+            }
+          ]
+        },
+        {
+          "label": "Télémédecine & SI",
+          "costs": {
+            "eur": -0.15,
+            "cp": -1,
+            "leg": 0,
+            "rj": 0,
+            "cm": 0
+          },
+          "lags": {
+            "start": 1,
+            "ramp": 3,
+            "duration": 9
+          },
+          "effects": [
+            {
+              "kpiId": "avg_wait_days",
+              "delta": -1.2,
+              "interval": {
+                "min": -0.6,
+                "max": -1.44
+              },
+              "confidence": "med",
+              "profile": "sigmoid"
+            },
+            {
+              "kpiId": "unmet_care_rate",
+              "delta": -0.3,
+              "interval": {
+                "min": -0.15,
+                "max": -0.36
+              },
+              "confidence": "med",
+              "profile": "sigmoid"
+            },
+            {
+              "kpiId": "fiber_coverage_pct",
+              "delta": 1.5,
+              "interval": {
+                "min": 0.75,
+                "max": 1.7999999999999998
+              },
+              "confidence": "med",
+              "profile": "sigmoid"
+            }
+          ],
+          "synergies": [
+            "LAW_Primary_Care"
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "LAW_Edu_Fundamentals",
+      "type": "law",
+      "ministries": [
+        "EducationResearch"
+      ],
+      "title": "Plan fondamentaux Éducation",
+      "description": "Maîtrise lecture/numératie et lutte contre l’abandon.",
+      "options": [
+        {
+          "label": "Cycle 2 intensif",
+          "costs": {
+            "eur": -0.15,
+            "cp": -1,
+            "leg": 0,
+            "rj": 0,
+            "cm": 0
+          },
+          "lags": {
+            "start": 2,
+            "ramp": 6,
+            "duration": 18
+          },
+          "effects": [
+            {
+              "kpiId": "literacy_rate",
+              "delta": 1.5,
+              "interval": {
+                "min": 0.75,
+                "max": 1.7999999999999998
+              },
+              "confidence": "med",
+              "profile": "sigmoid"
+            },
+            {
+              "kpiId": "dropout_rate",
+              "delta": -0.5,
+              "interval": {
+                "min": -0.25,
+                "max": -0.6
+              },
+              "confidence": "med",
+              "profile": "sigmoid"
+            }
+          ]
+        },
+        {
+          "label": "Alternance collège",
+          "costs": {
+            "eur": -0.2,
+            "cp": -1,
+            "leg": 0,
+            "rj": 0,
+            "cm": 0
+          },
+          "lags": {
+            "start": 2,
+            "ramp": 8,
+            "duration": 18
+          },
+          "effects": [
+            {
+              "kpiId": "literacy_rate",
+              "delta": 1.0,
+              "interval": {
+                "min": 0.5,
+                "max": 1.2
+              },
+              "confidence": "med",
+              "profile": "sigmoid"
+            },
+            {
+              "kpiId": "employment_rate",
+              "delta": 0.3,
+              "interval": {
+                "min": 0.15,
+                "max": 0.36
+              },
+              "confidence": "med",
+              "profile": "sigmoid"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "LAW_Housing_Permits",
+      "type": "law",
+      "ministries": [
+        "HousingPlanning"
+      ],
+      "title": "Accélération permis de construire",
+      "description": "Guichet unique, délais plafonds, 'silence vaut accord'.",
+      "options": [
+        {
+          "label": "Guichet unique",
+          "costs": {
+            "eur": -0.05,
+            "cp": -1,
+            "leg": 1,
+            "rj": 0.1,
+            "cm": 0
+          },
+          "lags": {
+            "start": 1,
+            "ramp": 3,
+            "duration": 12
+          },
+          "effects": [
+            {
+              "kpiId": "housing_starts",
+              "delta": 30000,
+              "interval": {
+                "min": 15000.0,
+                "max": 36000.0
+              },
+              "confidence": "med",
+              "profile": "linear"
+            }
+          ]
+        },
+        {
+          "label": "Délais contraints",
+          "costs": {
+            "eur": -0.1,
+            "cp": -2,
+            "leg": -1,
+            "rj": 0.2,
+            "cm": 0
+          },
+          "lags": {
+            "start": 1,
+            "ramp": 4,
+            "duration": 12
+          },
+          "effects": [
+            {
+              "kpiId": "housing_starts",
+              "delta": 60000,
+              "interval": {
+                "min": 30000.0,
+                "max": 72000.0
+              },
+              "confidence": "med",
+              "profile": "linear"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "LAW_Justice_Procedures",
+      "type": "law",
+      "ministries": [
+        "InteriorJustice"
+      ],
+      "title": "Procédures & délais justice",
+      "description": "Simplification procédurale et moyens ciblés.",
+      "options": [
+        {
+          "label": "Civile",
+          "costs": {
+            "eur": -0.05,
+            "cp": -1,
+            "leg": 1,
+            "rj": 0,
+            "cm": 0
+          },
+          "lags": {
+            "start": 1,
+            "ramp": 2,
+            "duration": 9
+          },
+          "effects": [
+            {
+              "kpiId": "clearance_rate",
+              "delta": 2.0,
+              "interval": {
+                "min": 1.0,
+                "max": 2.4
+              },
+              "confidence": "med",
+              "profile": "exp"
+            }
+          ]
+        },
+        {
+          "label": "Pénale",
+          "costs": {
+            "eur": -0.08,
+            "cp": -1,
+            "leg": 0,
+            "rj": 0,
+            "cm": 0
+          },
+          "lags": {
+            "start": 1,
+            "ramp": 3,
+            "duration": 9
+          },
+          "effects": [
+            {
+              "kpiId": "crime_rate_per_100k",
+              "delta": -15,
+              "interval": {
+                "min": -7.5,
+                "max": -18.0
+              },
+              "confidence": "med",
+              "profile": "exp"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "LAW_Nuclear_Accel",
+      "type": "law",
+      "ministries": [
+        "EnergyClimateIndustry"
+      ],
+      "title": "Accélération filière nucléaire",
+      "description": "Leviers réglementaires & financement initial.",
+      "options": [
+        {
+          "label": "Relance maintenance",
+          "costs": {
+            "eur": -0.2,
+            "cp": -1,
+            "leg": 0,
+            "rj": 0,
+            "cm": 1
+          },
+          "lags": {
+            "start": 1,
+            "ramp": 4,
+            "duration": 12
+          },
+          "effects": [
+            {
+              "kpiId": "share_nuclear_pct",
+              "delta": 3,
+              "interval": {
+                "min": 1.5,
+                "max": 3.5999999999999996
+              },
+              "confidence": "med",
+              "profile": "sigmoid"
+            },
+            {
+              "kpiId": "co2_intensity_power",
+              "delta": -20,
+              "interval": {
+                "min": -10.0,
+                "max": -24.0
+              },
+              "confidence": "med",
+              "profile": "sigmoid"
+            }
+          ]
+        },
+        {
+          "label": "Nouveaux projets",
+          "costs": {
+            "eur": -0.8,
+            "cp": -2,
+            "leg": -1,
+            "rj": 0,
+            "cm": 2
+          },
+          "lags": {
+            "start": 2,
+            "ramp": 8,
+            "duration": 24
+          },
+          "effects": [
+            {
+              "kpiId": "share_nuclear_pct",
+              "delta": 6,
+              "interval": {
+                "min": 3.0,
+                "max": 7.199999999999999
+              },
+              "confidence": "med",
+              "profile": "sigmoid"
+            },
+            {
+              "kpiId": "co2_intensity_power",
+              "delta": -45,
+              "interval": {
+                "min": -22.5,
+                "max": -54.0
+              },
+              "confidence": "med",
+              "profile": "sigmoid"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "LAW_Digital_Cloud",
+      "type": "law",
+      "ministries": [
+        "DigitalSovereignty"
+      ],
+      "title": "Cloud souverain secteur public",
+      "description": "Migration progressive des SI critiques.",
+      "options": [
+        {
+          "label": "Pilote",
+          "costs": {
+            "eur": -0.1,
+            "cp": -1,
+            "leg": 0,
+            "rj": 0,
+            "cm": 1
+          },
+          "lags": {
+            "start": 1,
+            "ramp": 4,
+            "duration": 12
+          },
+          "effects": [
+            {
+              "kpiId": "fiber_coverage_pct",
+              "delta": 1.0,
+              "interval": {
+                "min": 0.5,
+                "max": 1.2
+              },
+              "confidence": "med",
+              "profile": "linear"
+            }
+          ]
+        },
+        {
+          "label": "Standard",
+          "costs": {
+            "eur": -0.25,
+            "cp": -1,
+            "leg": 0,
+            "rj": 0,
+            "cm": 1
+          },
+          "lags": {
+            "start": 1,
+            "ramp": 6,
+            "duration": 18
+          },
+          "effects": [
+            {
+              "kpiId": "fiber_coverage_pct",
+              "delta": 2.5,
+              "interval": {
+                "min": 1.25,
+                "max": 3.0
+              },
+              "confidence": "med",
+              "profile": "linear"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "DECREE_Freeze_Tariffs",
+      "type": "decree",
+      "ministries": [
+        "EnergyClimateIndustry",
+        "SocialAffairs"
+      ],
+      "title": "Gel ciblé tarifs régulés (12 mois)",
+      "description": "Bouclier court terme pour ménages vulnérables.",
+      "options": [
+        {
+          "label": "Ciblé",
+          "costs": {
+            "eur": -0.3,
+            "cp": -1,
+            "leg": 1,
+            "rj": 0,
+            "cm": -1
+          },
+          "lags": {
+            "start": 0,
+            "ramp": 1,
+            "duration": 12
+          },
+          "effects": [
+            {
+              "kpiId": "poverty_rate",
+              "delta": -0.3,
+              "interval": {
+                "min": -0.15,
+                "max": -0.36
+              },
+              "confidence": "med",
+              "profile": "step"
+            }
+          ]
+        },
+        {
+          "label": "Large",
+          "costs": {
+            "eur": -0.8,
+            "cp": -2,
+            "leg": -1,
+            "rj": 0,
+            "cm": -2
+          },
+          "lags": {
+            "start": 0,
+            "ramp": 1,
+            "duration": 12
+          },
+          "effects": [
+            {
+              "kpiId": "poverty_rate",
+              "delta": -0.6,
+              "interval": {
+                "min": -0.3,
+                "max": -0.72
+              },
+              "confidence": "med",
+              "profile": "step"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "DECREE_Advance",
+      "type": "decree",
+      "ministries": [
+        "EconomyFinance"
+      ],
+      "title": "Décret d’avance budgétaire",
+      "description": "Mobilisation rapide de crédits avec plafond.",
+      "options": [
+        {
+          "label": "Limité",
+          "costs": {
+            "eur": -0.1,
+            "cp": -1,
+            "leg": 0,
+            "rj": 0,
+            "cm": -1
+          },
+          "lags": {
+            "start": 0,
+            "ramp": 0,
+            "duration": 1
+          },
+          "effects": [
+            {
+              "kpiId": "deficit_pct_gdp",
+              "delta": -0.2,
+              "interval": {
+                "min": -0.1,
+                "max": -0.24
+              },
+              "confidence": "med",
+              "profile": "step"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "DECREE_Requisition_Fuel",
+      "type": "decree",
+      "ministries": [
+        "EnergyClimateIndustry",
+        "Transport"
+      ],
+      "title": "Réquisitions stratégiques carburants",
+      "description": "Assurer la continuité pendant tensions.",
+      "options": [
+        {
+          "label": "Ciblées",
+          "costs": {
+            "eur": 0,
+            "cp": -1,
+            "leg": -2,
+            "rj": 0.2,
+            "cm": 0
+          },
+          "lags": {
+            "start": 0,
+            "ramp": 0,
+            "duration": 1
+          },
+          "effects": [
+            {
+              "kpiId": "rail_punctuality_pct",
+              "delta": 0.4,
+              "interval": {
+                "min": 0.2,
+                "max": 0.48
+              },
+              "confidence": "med",
+              "profile": "step"
+            }
+          ],
+          "risks": {
+            "probStrike": 0.25
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "DIPLO_EU_Funds",
+      "type": "diplomacy",
+      "ministries": [
+        "ForeignEU",
+        "EnergyClimateIndustry"
+      ],
+      "title": "Activation fonds transition UE",
+      "description": "Mobiliser financements pour énergie & climat.",
+      "options": [
+        {
+          "label": "Cohésion",
+          "costs": {
+            "eur": -0.2,
+            "cp": -1,
+            "leg": 0,
+            "rj": 0,
+            "cm": 1
+          },
+          "lags": {
+            "start": 1,
+            "ramp": 4,
+            "duration": 12
+          },
+          "effects": [
+            {
+              "kpiId": "co2_intensity_power",
+              "delta": -15,
+              "interval": {
+                "min": -7.5,
+                "max": -18.0
+              },
+              "confidence": "med",
+              "profile": "linear"
+            }
+          ]
+        },
+        {
+          "label": "Industrie",
+          "costs": {
+            "eur": -0.3,
+            "cp": -1,
+            "leg": 0,
+            "rj": 0,
+            "cm": 1
+          },
+          "lags": {
+            "start": 1,
+            "ramp": 6,
+            "duration": 18
+          },
+          "effects": [
+            {
+              "kpiId": "share_nuclear_pct",
+              "delta": 2,
+              "interval": {
+                "min": 1.0,
+                "max": 2.4
+              },
+              "confidence": "med",
+              "profile": "linear"
+            },
+            {
+              "kpiId": "co2_intensity_power",
+              "delta": -10,
+              "interval": {
+                "min": -5.0,
+                "max": -12.0
+              },
+              "confidence": "med",
+              "profile": "linear"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "DIPLO_LongTerm_Energy",
+      "type": "diplomacy",
+      "ministries": [
+        "ForeignEU",
+        "EnergyClimateIndustry"
+      ],
+      "title": "Contrats long terme énergie",
+      "description": "Sécuriser des volumes à prix prévisible.",
+      "options": [
+        {
+          "label": "Gaz",
+          "costs": {
+            "eur": 0,
+            "cp": -1,
+            "leg": 0,
+            "rj": 0,
+            "cm": 1
+          },
+          "lags": {
+            "start": 0,
+            "ramp": 2,
+            "duration": 12
+          },
+          "effects": [
+            {
+              "kpiId": "co2_intensity_power",
+              "delta": -10,
+              "interval": {
+                "min": -5.0,
+                "max": -12.0
+              },
+              "confidence": "med",
+              "profile": "linear"
+            }
+          ]
+        },
+        {
+          "label": "Élec",
+          "costs": {
+            "eur": 0,
+            "cp": -1,
+            "leg": 0,
+            "rj": 0,
+            "cm": 1
+          },
+          "lags": {
+            "start": 0,
+            "ramp": 2,
+            "duration": 12
+          },
+          "effects": [
+            {
+              "kpiId": "share_nuclear_pct",
+              "delta": 1.5,
+              "interval": {
+                "min": 0.75,
+                "max": 1.7999999999999998
+              },
+              "confidence": "med",
+              "profile": "linear"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "COM_Social_Conference",
+      "type": "communication",
+      "ministries": [
+        "LaborEmployment",
+        "SocialAffairs"
+      ],
+      "title": "Conférence sociale",
+      "description": "Concertation pour réduire tensions et stabiliser l’acceptabilité.",
+      "options": [
+        {
+          "label": "Accords de méthode",
+          "costs": {
+            "eur": -0.05,
+            "cp": -1,
+            "leg": 2,
+            "rj": 0,
+            "cm": 0
+          },
+          "lags": {
+            "start": 0,
+            "ramp": 2,
+            "duration": 6
+          },
+          "effects": [
+            {
+              "kpiId": "unemployment_rate",
+              "delta": -0.1,
+              "interval": {
+                "min": -0.05,
+                "max": -0.12
+              },
+              "confidence": "med",
+              "profile": "exp"
+            },
+            {
+              "kpiId": "poverty_rate",
+              "delta": -0.1,
+              "interval": {
+                "min": -0.05,
+                "max": -0.12
+              },
+              "confidence": "med",
+              "profile": "exp"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "COM_Public_Explanation",
+      "type": "communication",
+      "ministries": [
+        "EconomyFinance"
+      ],
+      "title": "Campagne d’explication",
+      "description": "Pédagogie des mesures budgétaires.",
+      "options": [
+        {
+          "label": "TV/Radio",
+          "costs": {
+            "eur": -0.03,
+            "cp": -1,
+            "leg": 1,
+            "rj": 0,
+            "cm": 0
+          },
+          "lags": {
+            "start": 0,
+            "ramp": 1,
+            "duration": 3
+          },
+          "effects": [
+            {
+              "kpiId": "deficit_pct_gdp",
+              "delta": 0.05,
+              "interval": {
+                "min": 0.025,
+                "max": 0.06
+              },
+              "confidence": "med",
+              "profile": "exp"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "EVENT_Gas_Price_Spike",
+      "type": "event",
+      "ministries": [
+        "EnergyClimateIndustry",
+        "SocialAffairs"
+      ],
+      "title": "Choc prix gaz",
+      "description": "Hausse brutale des prix de gros.",
+      "options": [
+        {
+          "label": "Impact exogène",
+          "costs": {
+            "eur": 0,
+            "cp": 0,
+            "leg": -1,
+            "rj": 0,
+            "cm": -2
+          },
+          "lags": {
+            "start": 0,
+            "ramp": 1,
+            "duration": 6
+          },
+          "effects": [
+            {
+              "kpiId": "poverty_rate",
+              "delta": 0.6,
+              "interval": {
+                "min": 0.3,
+                "max": 0.72
+              },
+              "confidence": "med",
+              "profile": "step"
+            },
+            {
+              "kpiId": "co2_intensity_power",
+              "delta": 20,
+              "interval": {
+                "min": 10.0,
+                "max": 24.0
+              },
+              "confidence": "med",
+              "profile": "step"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "EVENT_Heatwave_Drought",
+      "type": "event",
+      "ministries": [
+        "EnergyClimateIndustry",
+        "Health",
+        "Transport"
+      ],
+      "title": "Canicule & sécheresse",
+      "description": "Stress sanitaire et énergétique, impact transports.",
+      "options": [
+        {
+          "label": "Impact exogène",
+          "costs": {
+            "eur": 0,
+            "cp": 0,
+            "leg": -1,
+            "rj": 0,
+            "cm": -1
+          },
+          "lags": {
+            "start": 0,
+            "ramp": 1,
+            "duration": 3
+          },
+          "effects": [
+            {
+              "kpiId": "avg_wait_days",
+              "delta": 1.0,
+              "interval": {
+                "min": 0.5,
+                "max": 1.2
+              },
+              "confidence": "med",
+              "profile": "step"
+            },
+            {
+              "kpiId": "co2_intensity_power",
+              "delta": 10,
+              "interval": {
+                "min": 5.0,
+                "max": 12.0
+              },
+              "confidence": "med",
+              "profile": "step"
+            },
+            {
+              "kpiId": "rail_punctuality_pct",
+              "delta": -0.8,
+              "interval": {
+                "min": -0.4,
+                "max": -0.96
+              },
+              "confidence": "med",
+              "profile": "step"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "LAW_Competition_Open_Markets",
+      "type": "law",
+      "ministries": [
+        "EconomyFinance"
+      ],
+      "title": "Ouverture de marchés ciblés",
+      "description": "Favoriser la concurrence sur segments précis.",
+      "options": [
+        {
+          "label": "Pilote",
+          "costs": {
+            "eur": -0.05,
+            "cp": -1,
+            "leg": -1,
+            "rj": 0,
+            "cm": 1
+          },
+          "lags": {
+            "start": 1,
+            "ramp": 3,
+            "duration": 6
+          },
+          "effects": [
+            {
+              "kpiId": "employment_rate",
+              "delta": 0.3,
+              "interval": {
+                "min": 0.15,
+                "max": 0.36
+              },
+              "confidence": "med",
+              "profile": "linear"
+            },
+            {
+              "kpiId": "deficit_pct_gdp",
+              "delta": 0.1,
+              "interval": {
+                "min": 0.05,
+                "max": 0.12
+              },
+              "confidence": "med",
+              "profile": "linear"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
