@@ -249,10 +249,13 @@ export function generateMonthlyReport(gameState: GameState): MonthlyReport {
     pc => pc.playedAt === gameState.currentMonth
   );
 
+  // Generate Troika warnings based on thresholds
+  const troikaWarnings = generateTroikaWarnings(gameState);
+
   return {
     month: gameState.currentMonth,
     igg,
-    troikaWarnings: [], // TODO: implement warnings
+    troikaWarnings,
     objectivesProgress,
     ministries: ministryIPMs,
     cardsPlayed: cardsPlayedThisMonth,
@@ -264,4 +267,49 @@ export function generateMonthlyReport(gameState: GameState): MonthlyReport {
       debt: gameState.budget.debt,
     },
   };
+}
+
+/**
+ * Generate Troika warning messages based on proximity to triggers
+ */
+function generateTroikaWarnings(gameState: GameState): string[] {
+  const warnings: string[] = [];
+  const { budget, counters, difficulty } = gameState;
+  const thresholds = difficulty.troikaThresholds;
+
+  // Deficit warning
+  const deficitPct = ((budget.spending - budget.revenue) / budget.gdp) * 100;
+  if (deficitPct > thresholds.deficitPct * 0.8) {
+    warnings.push(`⚠️ Déficit élevé (${deficitPct.toFixed(1)}% du PIB). Seuil Troïka: ${thresholds.deficitPct}%`);
+  }
+
+  // Debt warning
+  const debtPct = (budget.debt / budget.gdp) * 100;
+  if (debtPct > thresholds.debtPct * 0.9) {
+    warnings.push(`⚠️ Dette publique critique (${debtPct.toFixed(1)}% du PIB). Seuil Troïka: ${thresholds.debtPct}%`);
+  }
+
+  // Market confidence warning
+  if (counters.cm < thresholds.cmMin + 10) {
+    warnings.push(`⚠️ Confiance des marchés faible (${counters.cm}/100). Seuil Troïka: ${thresholds.cmMin}`);
+  }
+
+  // Interest burden warning
+  const monthlyInterest = (budget.debt * 0.03) / 12;
+  const interestToRevenue = (monthlyInterest / budget.revenue) * 100;
+  if (interestToRevenue > thresholds.interestToRevenuePct * 0.85) {
+    warnings.push(`⚠️ Charge d'intérêts élevée (${interestToRevenue.toFixed(1)}% des recettes). Seuil Troïka: ${thresholds.interestToRevenuePct}%`);
+  }
+
+  // Social tension warning
+  if (counters.ts > 70) {
+    warnings.push(`⚠️ Tension sociale élevée (${counters.ts}/100). Risque de manifestations massives`);
+  }
+
+  // Low legitimacy warning
+  if (counters.leg < 30) {
+    warnings.push(`⚠️ Légitimité faible (${counters.leg}/100). Risque de motion de censure`);
+  }
+
+  return warnings;
 }

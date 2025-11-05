@@ -126,6 +126,17 @@ export default function Dashboard() {
               <span>Alerte</span>
               <span>Danger</span>
             </div>
+
+            {/* Troika Warnings */}
+            {currentReport && currentReport.troikaWarnings.length > 0 && (
+              <div className="mt-4 space-y-2">
+                {currentReport.troikaWarnings.map((warning, idx) => (
+                  <div key={idx} className="text-sm p-2 bg-yellow-50 border-l-2 border-yellow-500 text-yellow-800">
+                    {warning}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Ministries Grid */}
