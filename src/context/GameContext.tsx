@@ -17,13 +17,7 @@ interface GameContextType {
   currentReport: MonthlyReport | null;
   saveCurrentGame: () => Promise<void>;
   loadGameById: (saveId: string) => Promise<void>;
-  startNewGame: () => Promise<void>;
-  exportSaveGame: () => void;
-  importSaveGame: (file: File) => Promise<void>;
   loading: boolean;
-  cardsPlayedThisMonth: number;
-  majorCardsPlayedThisMonth: number;
-  communicationCardsPlayedThisMonth: number;
 }
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -209,13 +203,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
         currentReport,
         saveCurrentGame,
         loadGameById,
-        startNewGame,
-        exportSaveGame,
-        importSaveGame,
         loading,
-        cardsPlayedThisMonth,
-        majorCardsPlayedThisMonth,
-        communicationCardsPlayedThisMonth,
       }}
     >
       {children}
