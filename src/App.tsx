@@ -6,7 +6,6 @@ import Budget from './pages/Budget';
 import Report from './pages/Report';
 import DataImport from './pages/DataImport';
 import StressTest from './pages/StressTest';
-import './App.css';
 
 function App() {
   return (
