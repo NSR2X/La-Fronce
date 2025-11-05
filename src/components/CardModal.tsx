@@ -139,21 +139,43 @@ export default function CardModal({ card, onClose, onPlay, disabled }: CardModal
             </div>
           </div>
 
-          {/* Risks */}
-          {option.risks && (
+          {/* Risks with Gauges */}
+          {option.risks && (option.risks.probRJ || option.risks.probStrike) && (
             <div className="mb-6">
               <h3 className="font-bold text-lg mb-3">Risques</h3>
-              <div className="flex gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {option.risks.probRJ && (
-                  <div className="bg-alert/10 border border-alert rounded p-3">
-                    <div className="text-sm text-gray-600">Risques Juridiques</div>
-                    <div className="font-bold">{(option.risks.probRJ * 100).toFixed(0)}%</div>
+                  <div className="bg-alert/10 border border-alert rounded p-4">
+                    <div className="flex justify-between items-center mb-2">
+                      <div className="text-sm font-semibold text-gray-700">Risques Juridiques</div>
+                      <div className="font-bold text-alert">{(option.risks.probRJ * 100).toFixed(0)}%</div>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-3">
+                      <div
+                        className="h-3 rounded-full bg-alert transition-all"
+                        style={{ width: `${option.risks.probRJ * 100}%` }}
+                      />
+                    </div>
+                    <div className="text-xs text-gray-600 mt-2">
+                      Probabilité de contentieux ou recours
+                    </div>
                   </div>
                 )}
                 {option.risks.probStrike && (
-                  <div className="bg-alert/10 border border-alert rounded p-3">
-                    <div className="text-sm text-gray-600">Risque de Grève</div>
-                    <div className="font-bold">{(option.risks.probStrike * 100).toFixed(0)}%</div>
+                  <div className="bg-orange-50 border border-orange-500 rounded p-4">
+                    <div className="flex justify-between items-center mb-2">
+                      <div className="text-sm font-semibold text-gray-700">Risque de Grève</div>
+                      <div className="font-bold text-orange-600">{(option.risks.probStrike * 100).toFixed(0)}%</div>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-3">
+                      <div
+                        className="h-3 rounded-full bg-orange-500 transition-all"
+                        style={{ width: `${option.risks.probStrike * 100}%` }}
+                      />
+                    </div>
+                    <div className="text-xs text-gray-600 mt-2">
+                      Probabilité de mobilisations sociales
+                    </div>
                   </div>
                 )}
               </div>
