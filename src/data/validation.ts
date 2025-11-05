@@ -2,7 +2,11 @@ import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
 import type { KPIDataset, CardsDataset, ObjectivesDataset, DifficultyDataset } from '../types';
 
-const ajv = new Ajv({ allErrors: true, strict: false });
+const ajv = new Ajv({
+  allErrors: true,
+  strict: false,
+  validateSchema: false // Disable meta-schema validation to avoid draft 2020-12 issues
+});
 addFormats(ajv);
 
 // Import schemas
