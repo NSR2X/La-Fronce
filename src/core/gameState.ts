@@ -224,6 +224,32 @@ export function advanceMonth(gameState: GameState): GameState {
     };
   }
 
+  // Check victory condition at end of mandate
+  const totalMonths = currentState.difficulty.objectiveSelection.choose * 12;
+  if (newMonth >= totalMonths) {
+    const victoryAchieved = checkVictory({ ...currentState, currentMonth: newMonth, kpis: newKPIs });
+    if (victoryAchieved) {
+      return {
+        ...currentState,
+        currentMonth: newMonth,
+        kpis: newKPIs,
+        budget: newBudget,
+        counters: newCounters,
+        status: 'victory',
+      };
+    } else {
+      return {
+        ...currentState,
+        currentMonth: newMonth,
+        kpis: newKPIs,
+        budget: newBudget,
+        counters: newCounters,
+        status: 'defeat',
+        defeatReason: 'Objectifs non atteints à la fin du mandat',
+      };
+    }
+  }
+
   return {
     ...currentState,
     currentMonth: newMonth,

@@ -18,6 +18,9 @@ export default function CardDeck({ cards, onPlayCard, majorCardsPlayed, communic
 
   // Check if a specific card can be played
   const canPlayCard = (card: Card): boolean => {
+    // Events cannot be manually played
+    if (card.type === 'event') return false;
+
     if (card.type === 'communication') {
       return communicationCardsPlayed < maxCommunicationCards;
     } else {
@@ -27,6 +30,8 @@ export default function CardDeck({ cards, onPlayCard, majorCardsPlayed, communic
   };
 
   const filteredCards = cards.filter(card => {
+    // Exclude event cards (they are auto-applied, not manually played)
+    if (card.type === 'event') return false;
     if (filter !== 'all' && card.type !== filter) return false;
     if (filterMinistry && !card.ministries.includes(filterMinistry)) return false;
     return true;
