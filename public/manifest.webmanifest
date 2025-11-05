@@ -1,0 +1,27 @@
+{
+  "name": "Dernier Gouvernement",
+  "short_name": "Dernier Gouv",
+  "description": "Simulateur politique/économique France - Gérez le gouvernement et atteignez vos objectifs",
+  "start_url": "/La-Fronce/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0F172A",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/La-Fronce/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/La-Fronce/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "games", "productivity"],
+  "lang": "fr",
+  "dir": "ltr"
+}

@@ -1,0 +1,230 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/schemas/cards-dataset.schema.json",
+  "title": "Cards Dataset",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "cards": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "cardId": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "budget",
+              "law",
+              "decree",
+              "diplomacy",
+              "communication",
+              "event"
+            ]
+          },
+          "ministries": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "EconomyFinance",
+                "LaborEmployment",
+                "Health",
+                "EducationResearch",
+                "InteriorJustice",
+                "HousingPlanning",
+                "EnergyClimateIndustry",
+                "Transport",
+                "SocialAffairs",
+                "ForeignEU",
+                "Defense",
+                "CultureYouthSport",
+                "DigitalSovereignty"
+              ]
+            },
+            "minItems": 1
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "options": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 4,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "label": {
+                  "type": "string"
+                },
+                "costs": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "eur": {
+                      "type": "number"
+                    },
+                    "cp": {
+                      "type": "number"
+                    },
+                    "leg": {
+                      "type": "number"
+                    },
+                    "rj": {
+                      "type": "number"
+                    },
+                    "cm": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "eur",
+                    "cp",
+                    "leg",
+                    "rj",
+                    "cm"
+                  ]
+                },
+                "lags": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "start": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "ramp": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "duration": {
+                      "type": "integer",
+                      "minimum": 1
+                    }
+                  },
+                  "required": [
+                    "start",
+                    "ramp",
+                    "duration"
+                  ]
+                },
+                "effects": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "kpiId": {
+                        "type": "string"
+                      },
+                      "delta": {
+                        "type": "number"
+                      },
+                      "interval": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "min": {
+                            "type": "number"
+                          },
+                          "max": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "min",
+                          "max"
+                        ]
+                      },
+                      "confidence": {
+                        "type": "string",
+                        "enum": [
+                          "low",
+                          "med",
+                          "high"
+                        ]
+                      },
+                      "profile": {
+                        "type": "string",
+                        "enum": [
+                          "step",
+                          "linear",
+                          "sigmoid",
+                          "exp"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "kpiId",
+                      "delta",
+                      "interval",
+                      "confidence",
+                      "profile"
+                    ]
+                  }
+                },
+                "risks": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "probRJ": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "probStrike": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    }
+                  }
+                },
+                "synergies": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "antagonisms": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "label",
+                "costs",
+                "lags",
+                "effects"
+              ]
+            }
+          }
+        },
+        "required": [
+          "cardId",
+          "type",
+          "ministries",
+          "title",
+          "description",
+          "options"
+        ]
+      }
+    }
+  },
+  "required": [
+    "cards"
+  ]
+}

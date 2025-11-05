@@ -1,0 +1,166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/schemas/difficulty-dataset.schema.json",
+  "title": "Difficulty Modes Dataset",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "modes": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "mode": {
+            "type": "string",
+            "enum": [
+              "moderate",
+              "severe",
+              "extreme"
+            ]
+          },
+          "objectiveSelection": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "choose": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "mustComplete": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "midCheckpointMin": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "choose",
+              "mustComplete",
+              "midCheckpointMin"
+            ]
+          },
+          "troikaThresholds": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "deficitPct": {
+                "type": "number"
+              },
+              "months": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "debtPct": {
+                "type": "number"
+              },
+              "cmMin": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "interestToRevenuePct": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "deficitPct",
+              "months",
+              "debtPct",
+              "cmMin",
+              "interestToRevenuePct"
+            ]
+          },
+          "weights": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "EconomyFinance": {
+                "type": "number",
+                "minimum": 0
+              },
+              "LaborEmployment": {
+                "type": "number",
+                "minimum": 0
+              },
+              "Health": {
+                "type": "number",
+                "minimum": 0
+              },
+              "EducationResearch": {
+                "type": "number",
+                "minimum": 0
+              },
+              "InteriorJustice": {
+                "type": "number",
+                "minimum": 0
+              },
+              "HousingPlanning": {
+                "type": "number",
+                "minimum": 0
+              },
+              "EnergyClimateIndustry": {
+                "type": "number",
+                "minimum": 0
+              },
+              "Transport": {
+                "type": "number",
+                "minimum": 0
+              },
+              "SocialAffairs": {
+                "type": "number",
+                "minimum": 0
+              },
+              "ForeignEU": {
+                "type": "number",
+                "minimum": 0
+              },
+              "Defense": {
+                "type": "number",
+                "minimum": 0
+              },
+              "CultureYouthSport": {
+                "type": "number",
+                "minimum": 0
+              },
+              "DigitalSovereignty": {
+                "type": "number",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "EconomyFinance",
+              "LaborEmployment",
+              "Health",
+              "EducationResearch",
+              "InteriorJustice",
+              "HousingPlanning",
+              "EnergyClimateIndustry",
+              "Transport",
+              "SocialAffairs",
+              "ForeignEU",
+              "Defense",
+              "CultureYouthSport",
+              "DigitalSovereignty"
+            ]
+          }
+        },
+        "required": [
+          "mode",
+          "objectiveSelection",
+          "troikaThresholds",
+          "weights"
+        ]
+      }
+    }
+  },
+  "required": [
+    "modes"
+  ]
+}

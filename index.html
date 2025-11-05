@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0F172A" />
+    <meta name="description" content="Simulateur politique/économique France - Gérez le gouvernement et atteignez vos objectifs" />
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/La-Fronce/manifest.webmanifest" />
+
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" href="/La-Fronce/icons/icon-192.png" />
+
+    <!-- CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:;" />
+
+    <title>Dernier Gouvernement</title>
+
+    <!-- Single Page Apps for GitHub Pages -->
+    <script>
+      (function(l) {
+        if (l.search[1] === '/' ) {
+          var decoded = l.search.slice(1).split('&').map(function(s) {
+            return s.replace(/~and~/g, '&')
+          }).join('?');
+          window.history.replaceState(null, null,
+              l.pathname.slice(0, -1) + decoded + l.hash
+          );
+        }
+      }(window.location))
+    </script>
+  </head>
+  <body>
+    <noscript>
+      <div style="text-align: center; padding: 2rem;">
+        <h1>JavaScript Required</h1>
+        <p>Cette application nécessite JavaScript pour fonctionner.</p>
+      </div>
+    </noscript>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
