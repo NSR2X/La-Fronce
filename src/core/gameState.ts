@@ -18,6 +18,8 @@ import { calculateEffectDelta, getActiveEffects } from './effects';
 import { calculateRiskDamp, calculateAllIPMs, calculateIGG, clamp } from './aggregators';
 import { applyCausalityRules } from './causality';
 import { checkMidGameCheckpoint, checkTroikaDefeat, checkVictory, evaluateObjective } from './victory';
+import { drawEventCard, applyEventCard } from './events';
+import { updateCountersFromKPIs } from './counters';
 
 /**
  * Create a new game state
@@ -138,18 +140,30 @@ export function advanceMonth(gameState: GameState): GameState {
   const newMonth = gameState.currentMonth + 1;
   const currentDate = addMonths(gameState.startDate, newMonth);
 
+  // Step 1: Draw and apply event card (§6.1)
+  let currentState = { ...gameState, currentMonth: newMonth };
+  const eventCard = drawEventCard(currentState);
+  if (eventCard) {
+    const { cardId, optionIndex } = applyEventCard(eventCard);
+    // Apply the event as a regular card
+    currentState = playCard(currentState, cardId, optionIndex);
+  }
+
   // Get active effects for this month
-  const activeEffects = getActiveEffects(gameState.scheduledEffects, newMonth);
+  const activeEffects = getActiveEffects(currentState.scheduledEffects, newMonth);
 
   // Calculate risk damp
   const riskDamp = calculateRiskDamp(
-    gameState.counters.ts,
-    gameState.counters.rj,
-    gameState.counters.leg
+    currentState.counters.ts,
+    currentState.counters.rj,
+    currentState.counters.leg
   );
 
+  // Save previous KPIs for counter delta calculations (§10.3)
+  const previousKPIs = [...currentState.kpis];
+
   // Apply effects to KPIs
-  let newKPIs = [...gameState.kpis];
+  let newKPIs = [...currentState.kpis];
 
   for (const scheduledEffect of activeEffects) {
     const monthsSinceApplied = newMonth - scheduledEffect.appliedAt;
@@ -169,20 +183,25 @@ export function advanceMonth(gameState: GameState): GameState {
   }
 
   // Update budget
-  let newBudget = { ...gameState.budget };
+  let newBudget = { ...currentState.budget };
   const balance = newBudget.revenue - newBudget.spending;
   newBudget.debt += Math.abs(balance); // Simplified: deficit adds to debt
 
-  // Natural decay/changes to counters (simplified)
-  let newCounters = { ...gameState.counters };
+  // Update counters based on KPI changes (§10.3)
+  let newCounters = { ...currentState.counters };
+
+  // Natural decay/recovery
   newCounters.ts = clamp(newCounters.ts - 1, 0, 100); // Slowly decrease tension
   newCounters.cp = clamp(newCounters.cp + 2, 0, 100); // Recover political capital
 
+  // Apply KPI-derived counter updates
+  newCounters = updateCountersFromKPIs(newCounters, newKPIs, previousKPIs);
+
   // Check defeat conditions
-  const troikaCheck = checkTroikaDefeat({ ...gameState, currentMonth: newMonth, kpis: newKPIs, budget: newBudget, counters: newCounters });
+  const troikaCheck = checkTroikaDefeat({ ...currentState, currentMonth: newMonth, kpis: newKPIs, budget: newBudget, counters: newCounters });
   if (troikaCheck.defeated) {
     return {
-      ...gameState,
+      ...currentState,
       currentMonth: newMonth,
       kpis: newKPIs,
       budget: newBudget,
@@ -192,10 +211,10 @@ export function advanceMonth(gameState: GameState): GameState {
     };
   }
 
-  const midGamePassed = checkMidGameCheckpoint({ ...gameState, currentMonth: newMonth, kpis: newKPIs });
+  const midGamePassed = checkMidGameCheckpoint({ ...currentState, currentMonth: newMonth, kpis: newKPIs });
   if (!midGamePassed) {
     return {
-      ...gameState,
+      ...currentState,
       currentMonth: newMonth,
       kpis: newKPIs,
       budget: newBudget,
@@ -205,8 +224,34 @@ export function advanceMonth(gameState: GameState): GameState {
     };
   }
 
+  // Check victory condition at end of mandate
+  const totalMonths = currentState.difficulty.objectiveSelection.choose * 12;
+  if (newMonth >= totalMonths) {
+    const victoryAchieved = checkVictory({ ...currentState, currentMonth: newMonth, kpis: newKPIs });
+    if (victoryAchieved) {
+      return {
+        ...currentState,
+        currentMonth: newMonth,
+        kpis: newKPIs,
+        budget: newBudget,
+        counters: newCounters,
+        status: 'victory',
+      };
+    } else {
+      return {
+        ...currentState,
+        currentMonth: newMonth,
+        kpis: newKPIs,
+        budget: newBudget,
+        counters: newCounters,
+        status: 'defeat',
+        defeatReason: 'Objectifs non atteints à la fin du mandat',
+      };
+    }
+  }
+
   return {
-    ...gameState,
+    ...currentState,
     currentMonth: newMonth,
     kpis: newKPIs,
     budget: newBudget,
@@ -239,14 +284,28 @@ export function generateMonthlyReport(gameState: GameState): MonthlyReport {
     pc => pc.playedAt === gameState.currentMonth
   );
 
+  // Generate Troika warnings based on thresholds
+  const troikaWarnings = generateTroikaWarnings(gameState);
+
+  // Get events from this month (events are cards of type 'event')
+  const eventsThisMonth = cardsPlayedThisMonth
+    .map(pc => {
+      const card = gameState.cards.find(c => c.cardId === pc.cardId);
+      if (card && card.type === 'event') {
+        return card.title || card.cardId;
+      }
+      return null;
+    })
+    .filter(Boolean) as string[];
+
   return {
     month: gameState.currentMonth,
     igg,
-    troikaWarnings: [], // TODO: implement warnings
+    troikaWarnings,
     objectivesProgress,
     ministries: ministryIPMs,
     cardsPlayed: cardsPlayedThisMonth,
-    events: [],
+    events: eventsThisMonth,
     budgetSummary: {
       revenue: gameState.budget.revenue,
       spending: gameState.budget.spending,
@@ -254,4 +313,49 @@ export function generateMonthlyReport(gameState: GameState): MonthlyReport {
       debt: gameState.budget.debt,
     },
   };
+}
+
+/**
+ * Generate Troika warning messages based on proximity to triggers
+ */
+function generateTroikaWarnings(gameState: GameState): string[] {
+  const warnings: string[] = [];
+  const { budget, counters, difficulty } = gameState;
+  const thresholds = difficulty.troikaThresholds;
+
+  // Deficit warning
+  const deficitPct = ((budget.spending - budget.revenue) / budget.gdp) * 100;
+  if (deficitPct > thresholds.deficitPct * 0.8) {
+    warnings.push(`⚠️ Déficit élevé (${deficitPct.toFixed(1)}% du PIB). Seuil Troïka: ${thresholds.deficitPct}%`);
+  }
+
+  // Debt warning
+  const debtPct = (budget.debt / budget.gdp) * 100;
+  if (debtPct > thresholds.debtPct * 0.9) {
+    warnings.push(`⚠️ Dette publique critique (${debtPct.toFixed(1)}% du PIB). Seuil Troïka: ${thresholds.debtPct}%`);
+  }
+
+  // Market confidence warning
+  if (counters.cm < thresholds.cmMin + 10) {
+    warnings.push(`⚠️ Confiance des marchés faible (${counters.cm}/100). Seuil Troïka: ${thresholds.cmMin}`);
+  }
+
+  // Interest burden warning
+  const monthlyInterest = (budget.debt * 0.03) / 12;
+  const interestToRevenue = (monthlyInterest / budget.revenue) * 100;
+  if (interestToRevenue > thresholds.interestToRevenuePct * 0.85) {
+    warnings.push(`⚠️ Charge d'intérêts élevée (${interestToRevenue.toFixed(1)}% des recettes). Seuil Troïka: ${thresholds.interestToRevenuePct}%`);
+  }
+
+  // Social tension warning
+  if (counters.ts > 70) {
+    warnings.push(`⚠️ Tension sociale élevée (${counters.ts}/100). Risque de manifestations massives`);
+  }
+
+  // Low legitimacy warning
+  if (counters.leg < 30) {
+    warnings.push(`⚠️ Légitimité faible (${counters.leg}/100). Risque de motion de censure`);
+  }
+
+  return warnings;
 }

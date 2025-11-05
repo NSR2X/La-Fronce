@@ -83,10 +83,34 @@ export function GameProvider({ children }: { children: ReactNode }) {
     try {
       const newState = playCard(gameState, cardId, optionIndex);
       setGameState(newState);
+      // Auto-save after playing a card
+      saveGame(newState);
     } catch (error) {
       console.error('Error playing card:', error);
     }
   };
+
+  // Count cards played this month
+  const cardsPlayedThisMonth = gameState
+    ? gameState.playedCards.filter(pc => pc.playedAt === gameState.currentMonth).length
+    : 0;
+
+  // Count major cards (budget, law, decree, diplomacy) and communication cards separately
+  const majorCardsPlayedThisMonth = gameState
+    ? gameState.playedCards.filter(pc => {
+        if (pc.playedAt !== gameState.currentMonth) return false;
+        const card = gameState.cards.find(c => c.cardId === pc.cardId);
+        return card && ['budget', 'law', 'decree', 'diplomacy'].includes(card.type);
+      }).length
+    : 0;
+
+  const communicationCardsPlayedThisMonth = gameState
+    ? gameState.playedCards.filter(pc => {
+        if (pc.playedAt !== gameState.currentMonth) return false;
+        const card = gameState.cards.find(c => c.cardId === pc.cardId);
+        return card && card.type === 'communication';
+      }).length
+    : 0;
 
   const endMonth = () => {
     if (!gameState) return;
@@ -111,6 +135,61 @@ export function GameProvider({ children }: { children: ReactNode }) {
     const loaded = await loadGame(saveId);
     if (loaded) {
       setGameState(loaded);
+    }
+  };
+
+  const startNewGame = async () => {
+    // Create fresh game with default datasets
+    const selectedObjectives = defaultObjectivesData.objectives
+      .slice(0, 3)
+      .map(o => o.objectiveId);
+
+    const newGame = createNewGame(
+      defaultKpiData,
+      defaultCardsData,
+      defaultObjectivesData,
+      defaultDifficultyData,
+      selectedObjectives
+    );
+
+    await saveGame(newGame);
+    setGameState(newGame);
+  };
+
+  const exportSaveGame = () => {
+    if (!gameState) return;
+
+    // Create SaveGame.json (§9.1)
+    const saveData = JSON.stringify(gameState, null, 2);
+    const blob = new Blob([saveData], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+
+    // Create download link
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `savegame-${gameState.saveId}-month-${gameState.currentMonth + 1}.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  const importSaveGame = async (file: File) => {
+    try {
+      const text = await file.text();
+      const importedState = JSON.parse(text) as GameState;
+
+      // Basic validation
+      if (!importedState.saveId || !importedState.kpis || !importedState.cards) {
+        throw new Error('Invalid save file format');
+      }
+
+      // Save to IndexedDB and set as current
+      await saveGame(importedState);
+      setGameState(importedState);
+    } catch (error) {
+      console.error('Error importing save game:', error);
+      alert('Erreur lors de l\'import de la sauvegarde. Fichier invalide.');
     }
   };
 

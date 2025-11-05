@@ -1,7 +1,12 @@
 import { Link } from 'react-router-dom';
 import { useGame } from '../context/GameContext';
 import { MINISTRIES } from '../types';
-import { calculateIPM } from '../core/aggregators';
+import { calculateIPM, calculateIPMHistory, getVedetteKPIs, getKPINormalizedHistory } from '../core/aggregators';
+import CardDeck from '../components/CardDeck';
+import { calculateTroikaDangerLevel, getTroikaLevelDescription } from '../core/troika';
+import VictoryScreen from '../components/VictoryScreen';
+import DefeatScreen from '../components/DefeatScreen';
+import Sparkline from '../components/Sparkline';
 
 export default function Dashboard() {
   const { gameState, currentReport, endMonth, loading } = useGame();
@@ -31,7 +36,17 @@ export default function Dashboard() {
   }
 
   const igg = currentReport?.igg || 50;
-  const troikaLevel = 0; // Simplified
+  const troikaLevel = calculateTroikaDangerLevel(gameState);
+  const troikaStatus = getTroikaLevelDescription(troikaLevel);
+
+  // Show victory/defeat screens
+  if (gameState.status === 'victory') {
+    return <VictoryScreen gameState={gameState} onNewGame={startNewGame} />;
+  }
+
+  if (gameState.status === 'defeat') {
+    return <DefeatScreen gameState={gameState} onNewGame={startNewGame} />;
+  }
 
   return (
     <div className="min-h-screen p-6">
@@ -63,6 +78,20 @@ export default function Dashboard() {
             >
               Budget
             </Link>
+            <button
+              onClick={exportSaveGame}
+              className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+              title="Exporter la sauvegarde"
+            >
+              💾 Export
+            </button>
+            <button
+              onClick={handleImport}
+              className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
+              title="Importer une sauvegarde"
+            >
+              📂 Import
+            </button>
           </div>
         </div>
       </div>
@@ -89,23 +118,114 @@ export default function Dashboard() {
             </div>
           </div>
 
+          {/* Troika Thermometer */}
+          <div className="bg-white shadow-md rounded-lg p-6 mb-6" style={{
+            borderLeft: `4px solid ${troikaStatus.color}`
+          }}>
+            <div className="flex justify-between items-center mb-3">
+              <h2 className="text-xl font-bold">Risque Troïka</h2>
+              <span className="px-3 py-1 rounded-full text-sm font-semibold" style={{
+                color: troikaStatus.color,
+                backgroundColor: troikaStatus.bgColor
+              }}>
+                {troikaStatus.label}
+              </span>
+            </div>
+            <div className="relative w-full bg-gray-200 rounded-full h-6 overflow-hidden">
+              <div
+                className="h-6 rounded-full transition-all duration-500 flex items-center justify-end pr-2"
+                style={{
+                  width: `${troikaLevel}%`,
+                  backgroundColor: troikaStatus.color
+                }}
+              >
+                <span className="text-white text-xs font-bold">{troikaLevel}%</span>
+              </div>
+              {/* Threshold markers */}
+              <div className="absolute top-0 left-1/4 w-px h-6 bg-gray-400 opacity-50" />
+              <div className="absolute top-0 left-1/2 w-px h-6 bg-gray-400 opacity-50" />
+              <div className="absolute top-0 left-3/4 w-px h-6 bg-gray-400 opacity-50" />
+            </div>
+            <div className="flex justify-between text-xs text-gray-500 mt-1">
+              <span>Stable</span>
+              <span>Surveillance</span>
+              <span>Alerte</span>
+              <span>Danger</span>
+            </div>
+
+            {/* Troika Warnings */}
+            {currentReport && currentReport.troikaWarnings.length > 0 && (
+              <div className="mt-4 space-y-2">
+                {currentReport.troikaWarnings.map((warning, idx) => (
+                  <div key={idx} className="text-sm p-2 bg-yellow-50 border-l-2 border-yellow-500 text-yellow-800">
+                    {warning}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
           {/* Ministries Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {MINISTRIES.map(ministry => {
               const ipm = calculateIPM(ministry, gameState.kpis);
+              const ipmHistory = calculateIPMHistory(ministry, gameState.kpis, gameState.currentMonth, 6);
+              const sparklineColor = ipm >= 60 ? '#16A34A' : ipm >= 40 ? '#F59E0B' : '#DC2626';
+              const vedetteKPIs = getVedetteKPIs(ministry, gameState.kpis);
+
               return (
                 <Link
                   key={ministry}
                   to={`/ministry/${ministry}`}
                   className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow"
                 >
-                  <h3 className="font-semibold mb-2">{ministry}</h3>
-                  <div className="text-3xl font-bold" style={{
-                    color: ipm >= 60 ? '#16A34A' : ipm >= 40 ? '#F59E0B' : '#DC2626'
-                  }}>
-                    {ipm}
+                  <h3 className="font-semibold mb-3 text-sm">{ministry}</h3>
+
+                  {/* IPM Section */}
+                  <div className="flex items-end justify-between mb-4">
+                    <div>
+                      <div className="text-3xl font-bold" style={{
+                        color: sparklineColor
+                      }}>
+                        {ipm}
+                      </div>
+                      <div className="text-xs text-gray-500 mt-1">IPM</div>
+                    </div>
+                    <div className="mb-1">
+                      <Sparkline
+                        values={ipmHistory}
+                        width={80}
+                        height={30}
+                        color={sparklineColor}
+                        fillColor={`${sparklineColor}15`}
+                      />
+                    </div>
                   </div>
-                  <div className="text-xs text-gray-500 mt-1">IPM</div>
+
+                  {/* Vedette KPIs */}
+                  {vedetteKPIs.length > 0 && (
+                    <div className="space-y-2 pt-3 border-t border-gray-100">
+                      {vedetteKPIs.map(kpi => {
+                        const kpiHistory = getKPINormalizedHistory(kpi, gameState.currentMonth, 6);
+                        const kpiColor = '#6B7280'; // Gray color for vedette sparklines
+                        return (
+                          <div key={kpi.kpiId} className="flex items-center justify-between text-xs">
+                            <span className="text-gray-600 truncate flex-1" title={kpi.label}>
+                              {kpi.label.length > 20 ? kpi.label.substring(0, 20) + '...' : kpi.label}
+                            </span>
+                            <Sparkline
+                              values={kpiHistory}
+                              width={40}
+                              height={15}
+                              color={kpiColor}
+                              fillColor="transparent"
+                              showArea={false}
+                            />
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
                 </Link>
               );
             })}
@@ -189,6 +309,43 @@ export default function Dashboard() {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* Played Cards This Month */}
+      {(majorCardsPlayedThisMonth + communicationCardsPlayedThisMonth) > 0 && (
+        <div className="mt-6">
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <h3 className="font-bold mb-3">Cartes jouées ce mois</h3>
+            <div className="space-y-2">
+              {gameState.playedCards
+                .filter(pc => pc.playedAt === gameState.currentMonth)
+                .map((pc, idx) => {
+                  const card = gameState.cards.find(c => c.cardId === pc.cardId);
+                  const option = card?.options[pc.optionIndex];
+                  return (
+                    <div key={idx} className="bg-white rounded p-3 text-sm">
+                      <div className="font-semibold">{card?.title || pc.cardId}</div>
+                      <div className="text-gray-600">Option: {option?.label}</div>
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Card Deck - Full Width */}
+      <div className="mt-6">
+        <div className="bg-white shadow-md rounded-lg p-6">
+          <CardDeck
+            cards={gameState.cards}
+            onPlayCard={playCardAction}
+            majorCardsPlayed={majorCardsPlayedThisMonth}
+            communicationCardsPlayed={communicationCardsPlayedThisMonth}
+            maxMajorCards={2}
+            maxCommunicationCards={1}
+          />
         </div>
       </div>
     </div>
