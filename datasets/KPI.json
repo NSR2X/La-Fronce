@@ -1,0 +1,1097 @@
+{
+  "version": "1.0.0",
+  "kpis": [
+    {
+      "kpiId": "deficit_pct_gdp",
+      "ministry": "EconomyFinance",
+      "label": "Déficit public (% PIB)",
+      "unit": "%",
+      "direction": "decrease_good",
+      "bounds": {
+        "min": -15,
+        "max": 0
+      },
+      "history": [
+        {
+          "date": "2025-01",
+          "value": -6.0
+        },
+        {
+          "date": "2025-02",
+          "value": -5.8
+        },
+        {
+          "date": "2025-03",
+          "value": -5.6
+        },
+        {
+          "date": "2025-04",
+          "value": -5.4
+        },
+        {
+          "date": "2025-05",
+          "value": -5.2
+        },
+        {
+          "date": "2025-06",
+          "value": -5.0
+        }
+      ],
+      "weightInIPM": 0.5,
+      "source": {
+        "name": "Demo Source"
+      },
+      "lastUpdated": "2025-06"
+    },
+    {
+      "kpiId": "debt_pct_gdp",
+      "ministry": "EconomyFinance",
+      "label": "Dette publique (% PIB)",
+      "unit": "%",
+      "direction": "decrease_good",
+      "bounds": {
+        "min": 60,
+        "max": 140
+      },
+      "history": [
+        {
+          "date": "2025-01",
+          "value": 112.0
+        },
+        {
+          "date": "2025-02",
+          "value": 111.5
+        },
+        {
+          "date": "2025-03",
+          "value": 111.0
+        },
+        {
+          "date": "2025-04",
+          "value": 110.5
+        },
+        {
+          "date": "2025-05",
+          "value": 110.0
+        },
+        {
+          "date": "2025-06",
+          "value": 109.5
+        }
+      ],
+      "weightInIPM": 0.5,
+      "source": {
+        "name": "Demo Source"
+      },
+      "lastUpdated": "2025-06"
+    },
+    {
+      "kpiId": "unemployment_rate",
+      "ministry": "LaborEmployment",
+      "label": "Taux de chômage",
+      "unit": "%",
+      "direction": "decrease_good",
+      "bounds": {
+        "min": 3,
+        "max": 20
+      },
+      "history": [
+        {
+          "date": "2025-01",
+          "value": 9.2
+        },
+        {
+          "date": "2025-02",
+          "value": 9.1
+        },
+        {
+          "date": "2025-03",
+          "value": 9.0
+        },
+        {
+          "date": "2025-04",
+          "value": 8.9
+        },
+        {
+          "date": "2025-05",
+          "value": 8.8
+        },
+        {
+          "date": "2025-06",
+          "value": 8.7
+        }
+      ],
+      "weightInIPM": 0.5,
+      "source": {
+        "name": "Demo Source"
+      },
+      "lastUpdated": "2025-06"
+    },
+    {
+      "kpiId": "employment_rate",
+      "ministry": "LaborEmployment",
+      "label": "Taux d’emploi 15–64",
+      "unit": "%",
+      "direction": "increase_good",
+      "bounds": {
+        "min": 50,
+        "max": 85
+      },
+      "history": [
+        {
+          "date": "2025-01",
+          "value": 67.0
+        },
+        {
+          "date": "2025-02",
+          "value": 67.2
+        },
+        {
+          "date": "2025-03",
+          "value": 67.4
+        },
+        {
+          "date": "2025-04",
+          "value": 67.6
+        },
+        {
+          "date": "2025-05",
+          "value": 67.8
+        },
+        {
+          "date": "2025-06",
+          "value": 68.0
+        }
+      ],
+      "weightInIPM": 0.5,
+      "source": {
+        "name": "Demo Source"
+      },
+      "lastUpdated": "2025-06"
+    },
+    {
+      "kpiId": "avg_wait_days",
+      "ministry": "Health",
+      "label": "Délai moyen d’accès (jours)",
+      "unit": "jours",
+      "direction": "decrease_good",
+      "bounds": {
+        "min": 1,
+        "max": 30
+      },
+      "history": [
+        {
+          "date": "2025-01",
+          "value": 14
+        },
+        {
+          "date": "2025-02",
+          "value": 13.7
+        },
+        {
+          "date": "2025-03",
+          "value": 13.4
+        },
+        {
+          "date": "2025-04",
+          "value": 13.1
+        },
+        {
+          "date": "2025-05",
+          "value": 12.8
+        },
+        {
+          "date": "2025-06",
+          "value": 12.5
+        }
+      ],
+      "weightInIPM": 0.5,
+      "source": {
+        "name": "Demo Source"
+      },
+      "lastUpdated": "2025-06"
+    },
+    {
+      "kpiId": "unmet_care_rate",
+      "ministry": "Health",
+      "label": "Taux de renoncement aux soins",
+      "unit": "%",
+      "direction": "decrease_good",
+      "bounds": {
+        "min": 0,
+        "max": 15
+      },
+      "history": [
+        {
+          "date": "2025-01",
+          "value": 8.0
+        },
+        {
+          "date": "2025-02",
+          "value": 7.9
+        },
+        {
+          "date": "2025-03",
+          "value": 7.8
+        },
+        {
+          "date": "2025-04",
+          "value": 7.7
+        },
+        {
+          "date": "2025-05",
+          "value": 7.6
+        },
+        {
+          "date": "2025-06",
+          "value": 7.5
+        }
+      ],
+      "weightInIPM": 0.5,
+      "source": {
+        "name": "Demo Source"
+      },
+      "lastUpdated": "2025-06"
+    },
+    {
+      "kpiId": "literacy_rate",
+      "ministry": "EducationResearch",
+      "label": "Maîtrise fondamentaux (%)",
+      "unit": "%",
+      "direction": "increase_good",
+      "bounds": {
+        "min": 60,
+        "max": 100
+      },
+      "history": [
+        {
+          "date": "2025-01",
+          "value": 88
+        },
+        {
+          "date": "2025-02",
+          "value": 88.3
+        },
+        {
+          "date": "2025-03",
+          "value": 88.6
+        },
+        {
+          "date": "2025-04",
+          "value": 88.9
+        },
+        {
+          "date": "2025-05",
+          "value": 89.2
+        },
+        {
+          "date": "2025-06",
+          "value": 89.5
+        }
+      ],
+      "weightInIPM": 0.5,
+      "source": {
+        "name": "Demo Source"
+      },
+      "lastUpdated": "2025-06"
+    },
+    {
+      "kpiId": "dropout_rate",
+      "ministry": "EducationResearch",
+      "label": "Abandon scolaire (%)",
+      "unit": "%",
+      "direction": "decrease_good",
+      "bounds": {
+        "min": 0,
+        "max": 20
+      },
+      "history": [
+        {
+          "date": "2025-01",
+          "value": 8.5
+        },
+        {
+          "date": "2025-02",
+          "value": 8.4
+        },
+        {
+          "date": "2025-03",
+          "value": 8.3
+        },
+        {
+          "date": "2025-04",
+          "value": 8.2
+        },
+        {
+          "date": "2025-05",
+          "value": 8.1
+        },
+        {
+          "date": "2025-06",
+          "value": 8.0
+        }
+      ],
+      "weightInIPM": 0.5,
+      "source": {
+        "name": "Demo Source"
+      },
+      "lastUpdated": "2025-06"
+    },
+    {
+      "kpiId": "crime_rate_per_100k",
+      "ministry": "InteriorJustice",
+      "label": "Criminalité (pour 100k)",
+      "unit": "/100k",
+      "direction": "decrease_good",
+      "bounds": {
+        "min": 200,
+        "max": 2000
+      },
+      "history": [
+        {
+          "date": "2025-01",
+          "value": 820
+        },
+        {
+          "date": "2025-02",
+          "value": 815
+        },
+        {
+          "date": "2025-03",
+          "value": 810
+        },
+        {
+          "date": "2025-04",
+          "value": 805
+        },
+        {
+          "date": "2025-05",
+          "value": 800
+        },
+        {
+          "date": "2025-06",
+          "value": 795
+        }
+      ],
+      "weightInIPM": 0.5,
+      "source": {
+        "name": "Demo Source"
+      },
+      "lastUpdated": "2025-06"
+    },
+    {
+      "kpiId": "clearance_rate",
+      "ministry": "InteriorJustice",
+      "label": "Taux d’élucidation",
+      "unit": "%",
+      "direction": "increase_good",
+      "bounds": {
+        "min": 20,
+        "max": 95
+      },
+      "history": [
+        {
+          "date": "2025-01",
+          "value": 54
+        },
+        {
+          "date": "2025-02",
+          "value": 54.5
+        },
+        {
+          "date": "2025-03",
+          "value": 55.0
+        },
+        {
+          "date": "2025-04",
+          "value": 55.5
+        },
+        {
+          "date": "2025-05",
+          "value": 56.0
+        },
+        {
+          "date": "2025-06",
+          "value": 56.5
+        }
+      ],
+      "weightInIPM": 0.5,
+      "source": {
+        "name": "Demo Source"
+      },
+      "lastUpdated": "2025-06"
+    },
+    {
+      "kpiId": "housing_starts",
+      "ministry": "HousingPlanning",
+      "label": "Mises en chantier (unités/an)",
+      "unit": "unités",
+      "direction": "increase_good",
+      "bounds": {
+        "min": 150000,
+        "max": 500000
+      },
+      "history": [
+        {
+          "date": "2025-01",
+          "value": 280000
+        },
+        {
+          "date": "2025-02",
+          "value": 284000
+        },
+        {
+          "date": "2025-03",
+          "value": 288000
+        },
+        {
+          "date": "2025-04",
+          "value": 292000
+        },
+        {
+          "date": "2025-05",
+          "value": 296000
+        },
+        {
+          "date": "2025-06",
+          "value": 300000
+        }
+      ],
+      "weightInIPM": 0.5,
+      "source": {
+        "name": "Demo Source"
+      },
+      "lastUpdated": "2025-06"
+    },
+    {
+      "kpiId": "energy_poverty_rate",
+      "ministry": "HousingPlanning",
+      "label": "Précarité énergétique (%)",
+      "unit": "%",
+      "direction": "decrease_good",
+      "bounds": {
+        "min": 0,
+        "max": 20
+      },
+      "history": [
+        {
+          "date": "2025-01",
+          "value": 11.5
+        },
+        {
+          "date": "2025-02",
+          "value": 11.4
+        },
+        {
+          "date": "2025-03",
+          "value": 11.3
+        },
+        {
+          "date": "2025-04",
+          "value": 11.2
+        },
+        {
+          "date": "2025-05",
+          "value": 11.1
+        },
+        {
+          "date": "2025-06",
+          "value": 11.0
+        }
+      ],
+      "weightInIPM": 0.5,
+      "source": {
+        "name": "Demo Source"
+      },
+      "lastUpdated": "2025-06"
+    },
+    {
+      "kpiId": "share_nuclear_pct",
+      "ministry": "EnergyClimateIndustry",
+      "label": "Part nucléaire/élec (%)",
+      "unit": "%",
+      "direction": "increase_good",
+      "bounds": {
+        "min": 40,
+        "max": 80
+      },
+      "history": [
+        {
+          "date": "2025-01",
+          "value": 52
+        },
+        {
+          "date": "2025-02",
+          "value": 52.3
+        },
+        {
+          "date": "2025-03",
+          "value": 52.6
+        },
+        {
+          "date": "2025-04",
+          "value": 52.9
+        },
+        {
+          "date": "2025-05",
+          "value": 53.2
+        },
+        {
+          "date": "2025-06",
+          "value": 53.5
+        }
+      ],
+      "weightInIPM": 0.5,
+      "source": {
+        "name": "Demo Source"
+      },
+      "lastUpdated": "2025-06"
+    },
+    {
+      "kpiId": "co2_intensity_power",
+      "ministry": "EnergyClimateIndustry",
+      "label": "Intensité carbone élec (gCO2/kWh)",
+      "unit": "gCO2/kWh",
+      "direction": "decrease_good",
+      "bounds": {
+        "min": 0,
+        "max": 700
+      },
+      "history": [
+        {
+          "date": "2025-01",
+          "value": 250
+        },
+        {
+          "date": "2025-02",
+          "value": 245
+        },
+        {
+          "date": "2025-03",
+          "value": 240
+        },
+        {
+          "date": "2025-04",
+          "value": 235
+        },
+        {
+          "date": "2025-05",
+          "value": 230
+        },
+        {
+          "date": "2025-06",
+          "value": 225
+        }
+      ],
+      "weightInIPM": 0.5,
+      "source": {
+        "name": "Demo Source"
+      },
+      "lastUpdated": "2025-06"
+    },
+    {
+      "kpiId": "rail_punctuality_pct",
+      "ministry": "Transport",
+      "label": "Ponctualité ferroviaire (%)",
+      "unit": "%",
+      "direction": "increase_good",
+      "bounds": {
+        "min": 70,
+        "max": 100
+      },
+      "history": [
+        {
+          "date": "2025-01",
+          "value": 89
+        },
+        {
+          "date": "2025-02",
+          "value": 89.2
+        },
+        {
+          "date": "2025-03",
+          "value": 89.4
+        },
+        {
+          "date": "2025-04",
+          "value": 89.6
+        },
+        {
+          "date": "2025-05",
+          "value": 89.8
+        },
+        {
+          "date": "2025-06",
+          "value": 90.0
+        }
+      ],
+      "weightInIPM": 0.5,
+      "source": {
+        "name": "Demo Source"
+      },
+      "lastUpdated": "2025-06"
+    },
+    {
+      "kpiId": "traffic_deaths_per_million",
+      "ministry": "Transport",
+      "label": "Accidents mortels (par million)",
+      "unit": "/1M",
+      "direction": "decrease_good",
+      "bounds": {
+        "min": 10,
+        "max": 120
+      },
+      "history": [
+        {
+          "date": "2025-01",
+          "value": 52
+        },
+        {
+          "date": "2025-02",
+          "value": 51.2
+        },
+        {
+          "date": "2025-03",
+          "value": 50.4
+        },
+        {
+          "date": "2025-04",
+          "value": 49.6
+        },
+        {
+          "date": "2025-05",
+          "value": 48.8
+        },
+        {
+          "date": "2025-06",
+          "value": 48.0
+        }
+      ],
+      "weightInIPM": 0.5,
+      "source": {
+        "name": "Demo Source"
+      },
+      "lastUpdated": "2025-06"
+    },
+    {
+      "kpiId": "poverty_rate",
+      "ministry": "SocialAffairs",
+      "label": "Taux de pauvreté (%)",
+      "unit": "%",
+      "direction": "decrease_good",
+      "bounds": {
+        "min": 5,
+        "max": 25
+      },
+      "history": [
+        {
+          "date": "2025-01",
+          "value": 14.5
+        },
+        {
+          "date": "2025-02",
+          "value": 14.4
+        },
+        {
+          "date": "2025-03",
+          "value": 14.3
+        },
+        {
+          "date": "2025-04",
+          "value": 14.2
+        },
+        {
+          "date": "2025-05",
+          "value": 14.1
+        },
+        {
+          "date": "2025-06",
+          "value": 14.0
+        }
+      ],
+      "weightInIPM": 0.5,
+      "source": {
+        "name": "Demo Source"
+      },
+      "lastUpdated": "2025-06"
+    },
+    {
+      "kpiId": "gini_index",
+      "ministry": "SocialAffairs",
+      "label": "Indice de Gini",
+      "unit": "ratio",
+      "direction": "decrease_good",
+      "bounds": {
+        "min": 0.2,
+        "max": 0.5
+      },
+      "history": [
+        {
+          "date": "2025-01",
+          "value": 0.305
+        },
+        {
+          "date": "2025-02",
+          "value": 0.304
+        },
+        {
+          "date": "2025-03",
+          "value": 0.303
+        },
+        {
+          "date": "2025-04",
+          "value": 0.302
+        },
+        {
+          "date": "2025-05",
+          "value": 0.301
+        },
+        {
+          "date": "2025-06",
+          "value": 0.3
+        }
+      ],
+      "weightInIPM": 0.5,
+      "source": {
+        "name": "Demo Source"
+      },
+      "lastUpdated": "2025-06"
+    },
+    {
+      "kpiId": "eu_net_balance_pct_gdp",
+      "ministry": "ForeignEU",
+      "label": "Solde net UE (% PIB)",
+      "unit": "%",
+      "direction": "increase_good",
+      "bounds": {
+        "min": -2,
+        "max": 2
+      },
+      "history": [
+        {
+          "date": "2025-01",
+          "value": -0.9
+        },
+        {
+          "date": "2025-02",
+          "value": -0.85
+        },
+        {
+          "date": "2025-03",
+          "value": -0.8
+        },
+        {
+          "date": "2025-04",
+          "value": -0.75
+        },
+        {
+          "date": "2025-05",
+          "value": -0.7
+        },
+        {
+          "date": "2025-06",
+          "value": -0.65
+        }
+      ],
+      "weightInIPM": 0.5,
+      "source": {
+        "name": "Demo Source"
+      },
+      "lastUpdated": "2025-06"
+    },
+    {
+      "kpiId": "diplomatic_influence_index",
+      "ministry": "ForeignEU",
+      "label": "Indice d’influence (0–100)",
+      "unit": "idx",
+      "direction": "increase_good",
+      "bounds": {
+        "min": 0,
+        "max": 100
+      },
+      "history": [
+        {
+          "date": "2025-01",
+          "value": 58
+        },
+        {
+          "date": "2025-02",
+          "value": 58.3
+        },
+        {
+          "date": "2025-03",
+          "value": 58.6
+        },
+        {
+          "date": "2025-04",
+          "value": 58.9
+        },
+        {
+          "date": "2025-05",
+          "value": 59.2
+        },
+        {
+          "date": "2025-06",
+          "value": 59.5
+        }
+      ],
+      "weightInIPM": 0.5,
+      "source": {
+        "name": "Demo Source"
+      },
+      "lastUpdated": "2025-06"
+    },
+    {
+      "kpiId": "readiness_index",
+      "ministry": "Defense",
+      "label": "Indice d’opérationnalité (0–100)",
+      "unit": "idx",
+      "direction": "increase_good",
+      "bounds": {
+        "min": 0,
+        "max": 100
+      },
+      "history": [
+        {
+          "date": "2025-01",
+          "value": 62
+        },
+        {
+          "date": "2025-02",
+          "value": 62.4
+        },
+        {
+          "date": "2025-03",
+          "value": 62.8
+        },
+        {
+          "date": "2025-04",
+          "value": 63.2
+        },
+        {
+          "date": "2025-05",
+          "value": 63.6
+        },
+        {
+          "date": "2025-06",
+          "value": 64.0
+        }
+      ],
+      "weightInIPM": 0.5,
+      "source": {
+        "name": "Demo Source"
+      },
+      "lastUpdated": "2025-06"
+    },
+    {
+      "kpiId": "defense_spend_pct_gdp",
+      "ministry": "Defense",
+      "label": "Dépenses défense (% PIB)",
+      "unit": "%",
+      "direction": "increase_good",
+      "bounds": {
+        "min": 1,
+        "max": 4
+      },
+      "history": [
+        {
+          "date": "2025-01",
+          "value": 1.9
+        },
+        {
+          "date": "2025-02",
+          "value": 1.95
+        },
+        {
+          "date": "2025-03",
+          "value": 2.0
+        },
+        {
+          "date": "2025-04",
+          "value": 2.05
+        },
+        {
+          "date": "2025-05",
+          "value": 2.1
+        },
+        {
+          "date": "2025-06",
+          "value": 2.15
+        }
+      ],
+      "weightInIPM": 0.5,
+      "source": {
+        "name": "Demo Source"
+      },
+      "lastUpdated": "2025-06"
+    },
+    {
+      "kpiId": "cultural_participation_rate",
+      "ministry": "CultureYouthSport",
+      "label": "Participation culturelle (%)",
+      "unit": "%",
+      "direction": "increase_good",
+      "bounds": {
+        "min": 30,
+        "max": 100
+      },
+      "history": [
+        {
+          "date": "2025-01",
+          "value": 64
+        },
+        {
+          "date": "2025-02",
+          "value": 64.4
+        },
+        {
+          "date": "2025-03",
+          "value": 64.8
+        },
+        {
+          "date": "2025-04",
+          "value": 65.2
+        },
+        {
+          "date": "2025-05",
+          "value": 65.6
+        },
+        {
+          "date": "2025-06",
+          "value": 66.0
+        }
+      ],
+      "weightInIPM": 0.5,
+      "source": {
+        "name": "Demo Source"
+      },
+      "lastUpdated": "2025-06"
+    },
+    {
+      "kpiId": "sports_participation_rate",
+      "ministry": "CultureYouthSport",
+      "label": "Pratique sportive (%)",
+      "unit": "%",
+      "direction": "increase_good",
+      "bounds": {
+        "min": 30,
+        "max": 100
+      },
+      "history": [
+        {
+          "date": "2025-01",
+          "value": 55
+        },
+        {
+          "date": "2025-02",
+          "value": 55.5
+        },
+        {
+          "date": "2025-03",
+          "value": 56.0
+        },
+        {
+          "date": "2025-04",
+          "value": 56.5
+        },
+        {
+          "date": "2025-05",
+          "value": 57.0
+        },
+        {
+          "date": "2025-06",
+          "value": 57.5
+        }
+      ],
+      "weightInIPM": 0.5,
+      "source": {
+        "name": "Demo Source"
+      },
+      "lastUpdated": "2025-06"
+    },
+    {
+      "kpiId": "fiber_coverage_pct",
+      "ministry": "DigitalSovereignty",
+      "label": "Couverture fibre (%)",
+      "unit": "%",
+      "direction": "increase_good",
+      "bounds": {
+        "min": 50,
+        "max": 100
+      },
+      "history": [
+        {
+          "date": "2025-01",
+          "value": 82
+        },
+        {
+          "date": "2025-02",
+          "value": 82.5
+        },
+        {
+          "date": "2025-03",
+          "value": 83.0
+        },
+        {
+          "date": "2025-04",
+          "value": 83.5
+        },
+        {
+          "date": "2025-05",
+          "value": 84.0
+        },
+        {
+          "date": "2025-06",
+          "value": 84.5
+        }
+      ],
+      "weightInIPM": 0.5,
+      "source": {
+        "name": "Demo Source"
+      },
+      "lastUpdated": "2025-06"
+    },
+    {
+      "kpiId": "cyber_incidents_public_admin",
+      "ministry": "DigitalSovereignty",
+      "label": "Incidents cyber admin (nb/mois)",
+      "unit": "nb",
+      "direction": "decrease_good",
+      "bounds": {
+        "min": 0,
+        "max": 200
+      },
+      "history": [
+        {
+          "date": "2025-01",
+          "value": 42
+        },
+        {
+          "date": "2025-02",
+          "value": 41.0
+        },
+        {
+          "date": "2025-03",
+          "value": 40.0
+        },
+        {
+          "date": "2025-04",
+          "value": 39.0
+        },
+        {
+          "date": "2025-05",
+          "value": 38.0
+        },
+        {
+          "date": "2025-06",
+          "value": 37.0
+        }
+      ],
+      "weightInIPM": 0.5,
+      "source": {
+        "name": "Demo Source"
+      },
+      "lastUpdated": "2025-06"
+    }
+  ]
+}

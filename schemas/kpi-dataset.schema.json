@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/schemas/kpi-dataset.schema.json",
+  "title": "KPI Dataset",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "kpis": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "kpiId": {
+            "type": "string"
+          },
+          "ministry": {
+            "type": "string",
+            "enum": [
+              "EconomyFinance",
+              "LaborEmployment",
+              "Health",
+              "EducationResearch",
+              "InteriorJustice",
+              "HousingPlanning",
+              "EnergyClimateIndustry",
+              "Transport",
+              "SocialAffairs",
+              "ForeignEU",
+              "Defense",
+              "CultureYouthSport",
+              "DigitalSovereignty"
+            ]
+          },
+          "label": {
+            "type": "string"
+          },
+          "unit": {
+            "type": "string"
+          },
+          "direction": {
+            "type": "string",
+            "enum": [
+              "increase_good",
+              "decrease_good"
+            ]
+          },
+          "bounds": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "min": {
+                "type": "number"
+              },
+              "max": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "min",
+              "max"
+            ]
+          },
+          "history": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "date": {
+                  "type": "string",
+                  "pattern": "^\\d{4}-\\d{2}$"
+                },
+                "value": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "date",
+                "value"
+              ]
+            }
+          },
+          "weightInIPM": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "source": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              }
+            },
+            "required": [
+              "name"
+            ]
+          },
+          "lastUpdated": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}$"
+          }
+        },
+        "required": [
+          "kpiId",
+          "ministry",
+          "label",
+          "unit",
+          "direction",
+          "bounds",
+          "history",
+          "weightInIPM",
+          "source",
+          "lastUpdated"
+        ]
+      }
+    }
+  },
+  "required": [
+    "kpis"
+  ]
+}
