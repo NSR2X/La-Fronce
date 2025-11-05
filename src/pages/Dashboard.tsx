@@ -3,6 +3,7 @@ import { useGame } from '../context/GameContext';
 import { MINISTRIES } from '../types';
 import { calculateIPM } from '../core/aggregators';
 import CardDeck from '../components/CardDeck';
+import { calculateTroikaDangerLevel, getTroikaLevelDescription } from '../core/troika';
 
 export default function Dashboard() {
   const { gameState, currentReport, endMonth, loading, playCardAction, majorCardsPlayedThisMonth, communicationCardsPlayedThisMonth } = useGame();
@@ -32,7 +33,8 @@ export default function Dashboard() {
   }
 
   const igg = currentReport?.igg || 50;
-  const troikaLevel = 0; // Simplified
+  const troikaLevel = calculateTroikaDangerLevel(gameState);
+  const troikaStatus = getTroikaLevelDescription(troikaLevel);
 
   return (
     <div className="min-h-screen p-6">
@@ -87,6 +89,42 @@ export default function Dashboard() {
                   backgroundColor: igg >= 60 ? '#16A34A' : igg >= 40 ? '#F59E0B' : '#DC2626'
                 }}
               />
+            </div>
+          </div>
+
+          {/* Troika Thermometer */}
+          <div className="bg-white shadow-md rounded-lg p-6 mb-6" style={{
+            borderLeft: `4px solid ${troikaStatus.color}`
+          }}>
+            <div className="flex justify-between items-center mb-3">
+              <h2 className="text-xl font-bold">Risque Troïka</h2>
+              <span className="px-3 py-1 rounded-full text-sm font-semibold" style={{
+                color: troikaStatus.color,
+                backgroundColor: troikaStatus.bgColor
+              }}>
+                {troikaStatus.label}
+              </span>
+            </div>
+            <div className="relative w-full bg-gray-200 rounded-full h-6 overflow-hidden">
+              <div
+                className="h-6 rounded-full transition-all duration-500 flex items-center justify-end pr-2"
+                style={{
+                  width: `${troikaLevel}%`,
+                  backgroundColor: troikaStatus.color
+                }}
+              >
+                <span className="text-white text-xs font-bold">{troikaLevel}%</span>
+              </div>
+              {/* Threshold markers */}
+              <div className="absolute top-0 left-1/4 w-px h-6 bg-gray-400 opacity-50" />
+              <div className="absolute top-0 left-1/2 w-px h-6 bg-gray-400 opacity-50" />
+              <div className="absolute top-0 left-3/4 w-px h-6 bg-gray-400 opacity-50" />
+            </div>
+            <div className="flex justify-between text-xs text-gray-500 mt-1">
+              <span>Stable</span>
+              <span>Surveillance</span>
+              <span>Alerte</span>
+              <span>Danger</span>
             </div>
           </div>
 
