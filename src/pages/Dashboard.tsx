@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
 import { useGame } from '../context/GameContext';
 import { MINISTRIES } from '../types';
-import { calculateIPM } from '../core/aggregators';
+import { calculateIPM, calculateIPMHistory } from '../core/aggregators';
 import CardDeck from '../components/CardDeck';
 import { calculateTroikaDangerLevel, getTroikaLevelDescription } from '../core/troika';
 import VictoryScreen from '../components/VictoryScreen';
 import DefeatScreen from '../components/DefeatScreen';
+import Sparkline from '../components/Sparkline';
 
 export default function Dashboard() {
   const { gameState, currentReport, endMonth, loading, playCardAction, majorCardsPlayedThisMonth, communicationCardsPlayedThisMonth, startNewGame, exportSaveGame, importSaveGame } = useGame();
@@ -181,19 +182,35 @@ export default function Dashboard() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {MINISTRIES.map(ministry => {
               const ipm = calculateIPM(ministry, gameState.kpis);
+              const ipmHistory = calculateIPMHistory(ministry, gameState.kpis, gameState.currentMonth, 6);
+              const sparklineColor = ipm >= 60 ? '#16A34A' : ipm >= 40 ? '#F59E0B' : '#DC2626';
+
               return (
                 <Link
                   key={ministry}
                   to={`/ministry/${ministry}`}
                   className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow"
                 >
-                  <h3 className="font-semibold mb-2">{ministry}</h3>
-                  <div className="text-3xl font-bold" style={{
-                    color: ipm >= 60 ? '#16A34A' : ipm >= 40 ? '#F59E0B' : '#DC2626'
-                  }}>
-                    {ipm}
+                  <h3 className="font-semibold mb-2 text-sm">{ministry}</h3>
+                  <div className="flex items-end justify-between">
+                    <div>
+                      <div className="text-3xl font-bold" style={{
+                        color: sparklineColor
+                      }}>
+                        {ipm}
+                      </div>
+                      <div className="text-xs text-gray-500 mt-1">IPM</div>
+                    </div>
+                    <div className="mb-1">
+                      <Sparkline
+                        values={ipmHistory}
+                        width={80}
+                        height={30}
+                        color={sparklineColor}
+                        fillColor={`${sparklineColor}15`}
+                      />
+                    </div>
                   </div>
-                  <div className="text-xs text-gray-500 mt-1">IPM</div>
                 </Link>
               );
             })}

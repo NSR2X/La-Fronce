@@ -79,6 +79,44 @@ export function clamp(value: number, min: number, max: number): number {
 }
 
 /**
+ * Calculate IPM history for the last N months
+ */
+export function calculateIPMHistory(
+  ministry: Ministry,
+  kpis: KPI[],
+  currentMonth: number,
+  historyLength: number = 6
+): number[] {
+  const ministryKPIs = kpis.filter(k => k.ministry === ministry);
+
+  if (ministryKPIs.length === 0) {
+    return Array(historyLength).fill(50);
+  }
+
+  const history: number[] = [];
+  const startMonth = Math.max(0, currentMonth - historyLength + 1);
+
+  for (let month = startMonth; month <= currentMonth; month++) {
+    let weightedSum = 0;
+    let totalWeight = 0;
+
+    for (const kpi of ministryKPIs) {
+      // Find the KPI value at this month
+      const historyEntry = kpi.history.find(h => h.month === month);
+      const value = historyEntry ? historyEntry.value : getCurrentValue(kpi);
+      const normalized = normalizeKPI(value, kpi);
+      weightedSum += kpi.weightInIPM * normalized;
+      totalWeight += kpi.weightInIPM;
+    }
+
+    const ipm = totalWeight === 0 ? 50 : Math.round((100 * weightedSum) / totalWeight);
+    history.push(ipm);
+  }
+
+  return history;
+}
+
+/**
  * Calculate risk damping factor
  * riskDamp = clamp((TS/100)*α + (RJ/100)*β - (LEG/100)*γ, 0, 0.5)
  * with α=0.4, β=0.3, γ=0.2
