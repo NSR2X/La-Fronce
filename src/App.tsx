@@ -12,7 +12,7 @@ import StressTest from './pages/StressTest';
 function App() {
   return (
     <GameProvider>
-      <Router basename="/La-Fronce">
+      <Router basename={import.meta.env.BASE_URL}>
         <KeyboardNavWrapper>
           <div className="min-h-screen bg-gray-50">
             <Routes>
