@@ -4,20 +4,27 @@ import { MINISTRIES } from '../types';
 import { calculateIPM } from '../core/aggregators';
 
 export default function Dashboard() {
-  const { gameState, currentReport, endMonth } = useGame();
+  const { gameState, currentReport, endMonth, loading } = useGame();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-3xl font-bold mb-4">Dernier Gouvernement</h1>
+          <div className="animate-pulse">
+            <div className="text-xl">Chargement de la partie...</div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (!gameState) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-3xl font-bold mb-4">Dernier Gouvernement</h1>
-          <p className="mb-4">Aucune partie en cours</p>
-          <Link
-            to="/data"
-            className="bg-accent text-white px-6 py-3 rounded-lg hover:bg-blue-700"
-          >
-            Importer des données pour commencer
-          </Link>
+          <p className="text-alert">Erreur lors du chargement de la partie</p>
         </div>
       </div>
     );
@@ -51,10 +58,10 @@ export default function Dashboard() {
               Rapport
             </Link>
             <Link
-              to="/data"
+              to="/budget"
               className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
             >
-              Données
+              Budget
             </Link>
           </div>
         </div>

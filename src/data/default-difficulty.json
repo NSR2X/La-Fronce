@@ -1,0 +1,95 @@
+{
+  "version": "1.0.0",
+  "modes": [
+    {
+      "mode": "moderate",
+      "objectiveSelection": {
+        "choose": 3,
+        "mustComplete": 1,
+        "midCheckpointMin": 1
+      },
+      "troikaThresholds": {
+        "deficitPct": 6.0,
+        "months": 3,
+        "debtPct": 130.0,
+        "cmMin": 35.0,
+        "interestToRevenuePct": 12.0
+      },
+      "weights": {
+        "EconomyFinance": 1.0,
+        "LaborEmployment": 1.0,
+        "Health": 1.0,
+        "EducationResearch": 1.0,
+        "InteriorJustice": 1.0,
+        "HousingPlanning": 1.0,
+        "EnergyClimateIndustry": 1.0,
+        "Transport": 1.0,
+        "SocialAffairs": 1.0,
+        "ForeignEU": 1.0,
+        "Defense": 1.0,
+        "CultureYouthSport": 1.0,
+        "DigitalSovereignty": 1.0
+      }
+    },
+    {
+      "mode": "severe",
+      "objectiveSelection": {
+        "choose": 4,
+        "mustComplete": 2,
+        "midCheckpointMin": 1
+      },
+      "troikaThresholds": {
+        "deficitPct": 5.0,
+        "months": 3,
+        "debtPct": 125.0,
+        "cmMin": 40.0,
+        "interestToRevenuePct": 11.0
+      },
+      "weights": {
+        "EconomyFinance": 1.0,
+        "LaborEmployment": 1.0,
+        "Health": 1.0,
+        "EducationResearch": 1.0,
+        "InteriorJustice": 1.0,
+        "HousingPlanning": 1.0,
+        "EnergyClimateIndustry": 1.0,
+        "Transport": 1.0,
+        "SocialAffairs": 1.0,
+        "ForeignEU": 1.0,
+        "Defense": 1.0,
+        "CultureYouthSport": 1.0,
+        "DigitalSovereignty": 1.0
+      }
+    },
+    {
+      "mode": "extreme",
+      "objectiveSelection": {
+        "choose": 5,
+        "mustComplete": 3,
+        "midCheckpointMin": 2
+      },
+      "troikaThresholds": {
+        "deficitPct": 4.0,
+        "months": 2,
+        "debtPct": 120.0,
+        "cmMin": 45.0,
+        "interestToRevenuePct": 10.0
+      },
+      "weights": {
+        "EconomyFinance": 1.0,
+        "LaborEmployment": 1.0,
+        "Health": 1.0,
+        "EducationResearch": 1.0,
+        "InteriorJustice": 1.0,
+        "HousingPlanning": 1.0,
+        "EnergyClimateIndustry": 1.0,
+        "Transport": 1.0,
+        "SocialAffairs": 1.0,
+        "ForeignEU": 1.0,
+        "Defense": 1.0,
+        "CultureYouthSport": 1.0,
+        "DigitalSovereignty": 1.0
+      }
+    }
+  ]
+}
