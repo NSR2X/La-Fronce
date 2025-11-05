@@ -8,7 +8,20 @@ import VictoryScreen from '../components/VictoryScreen';
 import DefeatScreen from '../components/DefeatScreen';
 
 export default function Dashboard() {
-  const { gameState, currentReport, endMonth, loading, playCardAction, majorCardsPlayedThisMonth, communicationCardsPlayedThisMonth, startNewGame } = useGame();
+  const { gameState, currentReport, endMonth, loading, playCardAction, majorCardsPlayedThisMonth, communicationCardsPlayedThisMonth, startNewGame, exportSaveGame, importSaveGame } = useGame();
+
+  const handleImport = () => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json';
+    input.onchange = async (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0];
+      if (file) {
+        await importSaveGame(file);
+      }
+    };
+    input.click();
+  };
 
   if (loading) {
     return (
@@ -77,6 +90,20 @@ export default function Dashboard() {
             >
               Budget
             </Link>
+            <button
+              onClick={exportSaveGame}
+              className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+              title="Exporter la sauvegarde"
+            >
+              💾 Export
+            </button>
+            <button
+              onClick={handleImport}
+              className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
+              title="Importer une sauvegarde"
+            >
+              📂 Import
+            </button>
           </div>
         </div>
       </div>

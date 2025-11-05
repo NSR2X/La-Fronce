@@ -18,6 +18,8 @@ interface GameContextType {
   saveCurrentGame: () => Promise<void>;
   loadGameById: (saveId: string) => Promise<void>;
   startNewGame: () => Promise<void>;
+  exportSaveGame: () => void;
+  importSaveGame: (file: File) => Promise<void>;
   loading: boolean;
   cardsPlayedThisMonth: number;
   majorCardsPlayedThisMonth: number;
@@ -160,6 +162,43 @@ export function GameProvider({ children }: { children: ReactNode }) {
     setGameState(newGame);
   };
 
+  const exportSaveGame = () => {
+    if (!gameState) return;
+
+    // Create SaveGame.json (§9.1)
+    const saveData = JSON.stringify(gameState, null, 2);
+    const blob = new Blob([saveData], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+
+    // Create download link
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `savegame-${gameState.saveId}-month-${gameState.currentMonth + 1}.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  const importSaveGame = async (file: File) => {
+    try {
+      const text = await file.text();
+      const importedState = JSON.parse(text) as GameState;
+
+      // Basic validation
+      if (!importedState.saveId || !importedState.kpis || !importedState.cards) {
+        throw new Error('Invalid save file format');
+      }
+
+      // Save to IndexedDB and set as current
+      await saveGame(importedState);
+      setGameState(importedState);
+    } catch (error) {
+      console.error('Error importing save game:', error);
+      alert('Erreur lors de l\'import de la sauvegarde. Fichier invalide.');
+    }
+  };
+
   return (
     <GameContext.Provider
       value={{
@@ -171,6 +210,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
         saveCurrentGame,
         loadGameById,
         startNewGame,
+        exportSaveGame,
+        importSaveGame,
         loading,
         cardsPlayedThisMonth,
         majorCardsPlayedThisMonth,
