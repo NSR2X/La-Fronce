@@ -54,7 +54,9 @@ export function calculateAllIPMs(kpis: KPI[]): MinistryIPM[] {
  */
 export function calculateIGG(kpis: KPI[], difficulty: DifficultyDataset): number {
   const ministries = [...new Set(kpis.map(k => k.ministry))];
-  const weights = difficulty.weights.ministries;
+
+  // Safety check: use equal weights if difficulty not loaded
+  const weights = difficulty?.weights?.ministries || {};
 
   let weightedSum = 0;
   let totalWeight = 0;

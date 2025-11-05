@@ -6,6 +6,12 @@ import type { GameState } from '../types';
  */
 export function calculateTroikaDangerLevel(gameState: GameState): number {
   const { budget, counters, difficulty } = gameState;
+
+  // Safety check: return neutral if difficulty not yet loaded
+  if (!difficulty || !difficulty.troikaThresholds) {
+    return 50; // Default neutral level
+  }
+
   const thresholds = difficulty.troikaThresholds;
 
   let dangerScore = 0;

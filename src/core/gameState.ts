@@ -225,7 +225,9 @@ export function advanceMonth(gameState: GameState): GameState {
   }
 
   // Check victory condition at end of mandate
-  const totalMonths = currentState.difficulty.objectiveSelection.choose * 12;
+  const totalMonths = currentState.difficulty?.objectiveSelection?.choose
+    ? currentState.difficulty.objectiveSelection.choose * 12
+    : 36; // Default 3 years
   if (newMonth >= totalMonths) {
     const victoryAchieved = checkVictory({ ...currentState, currentMonth: newMonth, kpis: newKPIs });
     if (victoryAchieved) {

@@ -99,6 +99,11 @@ export function evaluateObjective(
  * Check if mid-game checkpoint is passed
  */
 export function checkMidGameCheckpoint(gameState: GameState): boolean {
+  // Safety check: if difficulty not loaded, pass checkpoint
+  if (!gameState.difficulty?.objectiveSelection) {
+    return true;
+  }
+
   const totalMonths = gameState.difficulty.objectiveSelection.choose * 12; // Assuming 1 year per objective
   const midPoint = Math.floor(totalMonths / 2);
 
@@ -124,6 +129,11 @@ export function checkMidGameCheckpoint(gameState: GameState): boolean {
  * Check Troika defeat conditions
  */
 export function checkTroikaDefeat(gameState: GameState): { defeated: boolean; reason?: string } {
+  // Safety check: if difficulty not loaded, no defeat
+  if (!gameState.difficulty?.troikaThresholds) {
+    return { defeated: false };
+  }
+
   const { troikaThresholds } = gameState.difficulty;
   const { budget, counters } = gameState;
 
