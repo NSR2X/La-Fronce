@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useGame } from '../context/GameContext';
 import { MINISTRIES } from '../types';
-import { calculateIPM, calculateIPMHistory } from '../core/aggregators';
+import { calculateIPM, calculateIPMHistory, getVedetteKPIs, getKPINormalizedHistory } from '../core/aggregators';
 import CardDeck from '../components/CardDeck';
 import { calculateTroikaDangerLevel, getTroikaLevelDescription } from '../core/troika';
 import VictoryScreen from '../components/VictoryScreen';
@@ -184,6 +184,7 @@ export default function Dashboard() {
               const ipm = calculateIPM(ministry, gameState.kpis);
               const ipmHistory = calculateIPMHistory(ministry, gameState.kpis, gameState.currentMonth, 6);
               const sparklineColor = ipm >= 60 ? '#16A34A' : ipm >= 40 ? '#F59E0B' : '#DC2626';
+              const vedetteKPIs = getVedetteKPIs(ministry, gameState.kpis);
 
               return (
                 <Link
@@ -191,8 +192,10 @@ export default function Dashboard() {
                   to={`/ministry/${ministry}`}
                   className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow"
                 >
-                  <h3 className="font-semibold mb-2 text-sm">{ministry}</h3>
-                  <div className="flex items-end justify-between">
+                  <h3 className="font-semibold mb-3 text-sm">{ministry}</h3>
+
+                  {/* IPM Section */}
+                  <div className="flex items-end justify-between mb-4">
                     <div>
                       <div className="text-3xl font-bold" style={{
                         color: sparklineColor
@@ -211,6 +214,31 @@ export default function Dashboard() {
                       />
                     </div>
                   </div>
+
+                  {/* Vedette KPIs */}
+                  {vedetteKPIs.length > 0 && (
+                    <div className="space-y-2 pt-3 border-t border-gray-100">
+                      {vedetteKPIs.map(kpi => {
+                        const kpiHistory = getKPINormalizedHistory(kpi, gameState.currentMonth, 6);
+                        const kpiColor = '#6B7280'; // Gray color for vedette sparklines
+                        return (
+                          <div key={kpi.kpiId} className="flex items-center justify-between text-xs">
+                            <span className="text-gray-600 truncate flex-1" title={kpi.label}>
+                              {kpi.label.length > 20 ? kpi.label.substring(0, 20) + '...' : kpi.label}
+                            </span>
+                            <Sparkline
+                              values={kpiHistory}
+                              width={40}
+                              height={15}
+                              color={kpiColor}
+                              fillColor="transparent"
+                              showArea={false}
+                            />
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
                 </Link>
               );
             })}
