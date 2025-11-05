@@ -2,8 +2,11 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 
+// Use relative path for dev, absolute for production GitHub Pages
+const base = process.env.NODE_ENV === 'production' ? '/La-Fronce/' : '/'
+
 export default defineConfig({
-  base: '/La-Fronce/',
+  base,
   plugins: [
     react(),
     VitePWA({
@@ -16,17 +19,17 @@ export default defineConfig({
         theme_color: '#0F172A',
         background_color: '#ffffff',
         display: 'standalone',
-        start_url: '/La-Fronce/',
-        scope: '/La-Fronce/',
+        start_url: base,
+        scope: base,
         icons: [
           {
-            src: '/La-Fronce/icons/icon-192.png',
+            src: `${base}icons/icon-192.png`,
             sizes: '192x192',
             type: 'image/png',
             purpose: 'any maskable'
           },
           {
-            src: '/La-Fronce/icons/icon-512.png',
+            src: `${base}icons/icon-512.png`,
             sizes: '512x512',
             type: 'image/png',
             purpose: 'any maskable'
