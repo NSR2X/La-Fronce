@@ -9,7 +9,16 @@ import DefeatScreen from '../components/DefeatScreen';
 import Sparkline from '../components/Sparkline';
 
 export default function Dashboard() {
-  const { gameState, currentReport, endMonth, loading } = useGame();
+  const {
+    gameState,
+    currentReport,
+    endMonth,
+    loading,
+    playCardAction,
+    majorCardsPlayedThisMonth,
+    communicationCardsPlayedThisMonth,
+    startNewGame
+  } = useGame();
 
   if (loading) {
     return (
@@ -78,20 +87,6 @@ export default function Dashboard() {
             >
               Budget
             </Link>
-            <button
-              onClick={exportSaveGame}
-              className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-              title="Exporter la sauvegarde"
-            >
-              💾 Export
-            </button>
-            <button
-              onClick={handleImport}
-              className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
-              title="Importer une sauvegarde"
-            >
-              📂 Import
-            </button>
           </div>
         </div>
       </div>
