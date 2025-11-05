@@ -2,9 +2,10 @@ import { Link } from 'react-router-dom';
 import { useGame } from '../context/GameContext';
 import { MINISTRIES } from '../types';
 import { calculateIPM } from '../core/aggregators';
+import CardDeck from '../components/CardDeck';
 
 export default function Dashboard() {
-  const { gameState, currentReport, endMonth, loading } = useGame();
+  const { gameState, currentReport, endMonth, loading, playCardAction, cardsPlayedThisMonth } = useGame();
 
   if (loading) {
     return (
@@ -189,6 +190,41 @@ export default function Dashboard() {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* Played Cards This Month */}
+      {cardsPlayedThisMonth > 0 && (
+        <div className="mt-6">
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <h3 className="font-bold mb-3">Cartes jouées ce mois</h3>
+            <div className="space-y-2">
+              {gameState.playedCards
+                .filter(pc => pc.playedAt === gameState.currentMonth)
+                .map((pc, idx) => {
+                  const card = gameState.cards.find(c => c.cardId === pc.cardId);
+                  const option = card?.options[pc.optionIndex];
+                  return (
+                    <div key={idx} className="bg-white rounded p-3 text-sm">
+                      <div className="font-semibold">{card?.title || pc.cardId}</div>
+                      <div className="text-gray-600">Option: {option?.label}</div>
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Card Deck - Full Width */}
+      <div className="mt-6">
+        <div className="bg-white shadow-md rounded-lg p-6">
+          <CardDeck
+            cards={gameState.cards}
+            onPlayCard={playCardAction}
+            cardsPlayedThisMonth={cardsPlayedThisMonth}
+            maxCardsPerMonth={2}
+          />
         </div>
       </div>
     </div>

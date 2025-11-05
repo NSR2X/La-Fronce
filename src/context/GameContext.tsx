@@ -18,6 +18,7 @@ interface GameContextType {
   saveCurrentGame: () => Promise<void>;
   loadGameById: (saveId: string) => Promise<void>;
   loading: boolean;
+  cardsPlayedThisMonth: number;
 }
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -83,10 +84,17 @@ export function GameProvider({ children }: { children: ReactNode }) {
     try {
       const newState = playCard(gameState, cardId, optionIndex);
       setGameState(newState);
+      // Auto-save after playing a card
+      saveGame(newState);
     } catch (error) {
       console.error('Error playing card:', error);
     }
   };
+
+  // Count cards played this month
+  const cardsPlayedThisMonth = gameState
+    ? gameState.playedCards.filter(pc => pc.playedAt === gameState.currentMonth).length
+    : 0;
 
   const endMonth = () => {
     if (!gameState) return;
@@ -125,6 +133,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
         saveCurrentGame,
         loadGameById,
         loading,
+        cardsPlayedThisMonth,
       }}
     >
       {children}
