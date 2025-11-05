@@ -18,6 +18,7 @@ import { calculateEffectDelta, getActiveEffects } from './effects';
 import { calculateRiskDamp, calculateAllIPMs, calculateIGG, clamp } from './aggregators';
 import { applyCausalityRules } from './causality';
 import { checkMidGameCheckpoint, checkTroikaDefeat, checkVictory, evaluateObjective } from './victory';
+import { drawEventCard, applyEventCard } from './events';
 
 /**
  * Create a new game state
@@ -138,18 +139,27 @@ export function advanceMonth(gameState: GameState): GameState {
   const newMonth = gameState.currentMonth + 1;
   const currentDate = addMonths(gameState.startDate, newMonth);
 
+  // Step 1: Draw and apply event card (§6.1)
+  let currentState = { ...gameState, currentMonth: newMonth };
+  const eventCard = drawEventCard(currentState);
+  if (eventCard) {
+    const { cardId, optionIndex } = applyEventCard(eventCard);
+    // Apply the event as a regular card
+    currentState = playCard(currentState, cardId, optionIndex);
+  }
+
   // Get active effects for this month
-  const activeEffects = getActiveEffects(gameState.scheduledEffects, newMonth);
+  const activeEffects = getActiveEffects(currentState.scheduledEffects, newMonth);
 
   // Calculate risk damp
   const riskDamp = calculateRiskDamp(
-    gameState.counters.ts,
-    gameState.counters.rj,
-    gameState.counters.leg
+    currentState.counters.ts,
+    currentState.counters.rj,
+    currentState.counters.leg
   );
 
   // Apply effects to KPIs
-  let newKPIs = [...gameState.kpis];
+  let newKPIs = [...currentState.kpis];
 
   for (const scheduledEffect of activeEffects) {
     const monthsSinceApplied = newMonth - scheduledEffect.appliedAt;
@@ -169,20 +179,20 @@ export function advanceMonth(gameState: GameState): GameState {
   }
 
   // Update budget
-  let newBudget = { ...gameState.budget };
+  let newBudget = { ...currentState.budget };
   const balance = newBudget.revenue - newBudget.spending;
   newBudget.debt += Math.abs(balance); // Simplified: deficit adds to debt
 
   // Natural decay/changes to counters (simplified)
-  let newCounters = { ...gameState.counters };
+  let newCounters = { ...currentState.counters };
   newCounters.ts = clamp(newCounters.ts - 1, 0, 100); // Slowly decrease tension
   newCounters.cp = clamp(newCounters.cp + 2, 0, 100); // Recover political capital
 
   // Check defeat conditions
-  const troikaCheck = checkTroikaDefeat({ ...gameState, currentMonth: newMonth, kpis: newKPIs, budget: newBudget, counters: newCounters });
+  const troikaCheck = checkTroikaDefeat({ ...currentState, currentMonth: newMonth, kpis: newKPIs, budget: newBudget, counters: newCounters });
   if (troikaCheck.defeated) {
     return {
-      ...gameState,
+      ...currentState,
       currentMonth: newMonth,
       kpis: newKPIs,
       budget: newBudget,
@@ -192,10 +202,10 @@ export function advanceMonth(gameState: GameState): GameState {
     };
   }
 
-  const midGamePassed = checkMidGameCheckpoint({ ...gameState, currentMonth: newMonth, kpis: newKPIs });
+  const midGamePassed = checkMidGameCheckpoint({ ...currentState, currentMonth: newMonth, kpis: newKPIs });
   if (!midGamePassed) {
     return {
-      ...gameState,
+      ...currentState,
       currentMonth: newMonth,
       kpis: newKPIs,
       budget: newBudget,
@@ -206,7 +216,7 @@ export function advanceMonth(gameState: GameState): GameState {
   }
 
   return {
-    ...gameState,
+    ...currentState,
     currentMonth: newMonth,
     kpis: newKPIs,
     budget: newBudget,

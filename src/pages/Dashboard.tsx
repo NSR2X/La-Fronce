@@ -5,7 +5,7 @@ import { calculateIPM } from '../core/aggregators';
 import CardDeck from '../components/CardDeck';
 
 export default function Dashboard() {
-  const { gameState, currentReport, endMonth, loading, playCardAction, cardsPlayedThisMonth } = useGame();
+  const { gameState, currentReport, endMonth, loading, playCardAction, majorCardsPlayedThisMonth, communicationCardsPlayedThisMonth } = useGame();
 
   if (loading) {
     return (
@@ -194,7 +194,7 @@ export default function Dashboard() {
       </div>
 
       {/* Played Cards This Month */}
-      {cardsPlayedThisMonth > 0 && (
+      {(majorCardsPlayedThisMonth + communicationCardsPlayedThisMonth) > 0 && (
         <div className="mt-6">
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
             <h3 className="font-bold mb-3">Cartes jouées ce mois</h3>
@@ -222,8 +222,10 @@ export default function Dashboard() {
           <CardDeck
             cards={gameState.cards}
             onPlayCard={playCardAction}
-            cardsPlayedThisMonth={cardsPlayedThisMonth}
-            maxCardsPerMonth={2}
+            majorCardsPlayed={majorCardsPlayedThisMonth}
+            communicationCardsPlayed={communicationCardsPlayedThisMonth}
+            maxMajorCards={2}
+            maxCommunicationCards={1}
           />
         </div>
       </div>

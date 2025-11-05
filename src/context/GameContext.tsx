@@ -19,6 +19,8 @@ interface GameContextType {
   loadGameById: (saveId: string) => Promise<void>;
   loading: boolean;
   cardsPlayedThisMonth: number;
+  majorCardsPlayedThisMonth: number;
+  communicationCardsPlayedThisMonth: number;
 }
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -96,6 +98,23 @@ export function GameProvider({ children }: { children: ReactNode }) {
     ? gameState.playedCards.filter(pc => pc.playedAt === gameState.currentMonth).length
     : 0;
 
+  // Count major cards (budget, law, decree, diplomacy) and communication cards separately
+  const majorCardsPlayedThisMonth = gameState
+    ? gameState.playedCards.filter(pc => {
+        if (pc.playedAt !== gameState.currentMonth) return false;
+        const card = gameState.cards.find(c => c.cardId === pc.cardId);
+        return card && ['budget', 'law', 'decree', 'diplomacy'].includes(card.type);
+      }).length
+    : 0;
+
+  const communicationCardsPlayedThisMonth = gameState
+    ? gameState.playedCards.filter(pc => {
+        if (pc.playedAt !== gameState.currentMonth) return false;
+        const card = gameState.cards.find(c => c.cardId === pc.cardId);
+        return card && card.type === 'communication';
+      }).length
+    : 0;
+
   const endMonth = () => {
     if (!gameState) return;
 
@@ -134,6 +153,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
         loadGameById,
         loading,
         cardsPlayedThisMonth,
+        majorCardsPlayedThisMonth,
+        communicationCardsPlayedThisMonth,
       }}
     >
       {children}

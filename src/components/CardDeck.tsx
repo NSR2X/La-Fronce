@@ -5,16 +5,26 @@ import CardModal from './CardModal';
 interface CardDeckProps {
   cards: Card[];
   onPlayCard: (cardId: string, optionIndex: number) => void;
-  cardsPlayedThisMonth: number;
-  maxCardsPerMonth: number;
+  majorCardsPlayed: number;
+  communicationCardsPlayed: number;
+  maxMajorCards: number;
+  maxCommunicationCards: number;
   filterMinistry?: Ministry;
 }
 
-export default function CardDeck({ cards, onPlayCard, cardsPlayedThisMonth, maxCardsPerMonth, filterMinistry }: CardDeckProps) {
+export default function CardDeck({ cards, onPlayCard, majorCardsPlayed, communicationCardsPlayed, maxMajorCards, maxCommunicationCards, filterMinistry }: CardDeckProps) {
   const [selectedCard, setSelectedCard] = useState<Card | null>(null);
   const [filter, setFilter] = useState<'all' | 'budget' | 'law' | 'decree' | 'diplomacy' | 'communication'>('all');
 
-  const canPlayMoreCards = cardsPlayedThisMonth < maxCardsPerMonth;
+  // Check if a specific card can be played
+  const canPlayCard = (card: Card): boolean => {
+    if (card.type === 'communication') {
+      return communicationCardsPlayed < maxCommunicationCards;
+    } else {
+      // Major cards: budget, law, decree, diplomacy
+      return majorCardsPlayed < maxMajorCards;
+    }
+  };
 
   const filteredCards = cards.filter(card => {
     if (filter !== 'all' && card.type !== filter) return false;
@@ -23,7 +33,7 @@ export default function CardDeck({ cards, onPlayCard, cardsPlayedThisMonth, maxC
   });
 
   const handlePlayCard = (optionIndex: number) => {
-    if (selectedCard && canPlayMoreCards) {
+    if (selectedCard && canPlayCard(selectedCard)) {
       onPlayCard(selectedCard.cardId, optionIndex);
       setSelectedCard(null);
     }
@@ -35,9 +45,14 @@ export default function CardDeck({ cards, onPlayCard, cardsPlayedThisMonth, maxC
       <div className="mb-4 flex justify-between items-center">
         <div>
           <h2 className="text-xl font-bold">Cartes Disponibles</h2>
-          <p className="text-sm text-gray-600">
-            {cardsPlayedThisMonth}/{maxCardsPerMonth} cartes jouées ce mois
-          </p>
+          <div className="flex gap-4 text-sm text-gray-600">
+            <p>
+              Cartes majeures: {majorCardsPlayed}/{maxMajorCards}
+            </p>
+            <p>
+              Communication: {communicationCardsPlayed}/{maxCommunicationCards}
+            </p>
+          </div>
         </div>
 
         {/* Filters */}
@@ -69,10 +84,10 @@ export default function CardDeck({ cards, onPlayCard, cardsPlayedThisMonth, maxC
         </div>
       </div>
 
-      {!canPlayMoreCards && (
+      {majorCardsPlayed >= maxMajorCards && communicationCardsPlayed >= maxCommunicationCards && (
         <div className="bg-yellow-50 border border-yellow-200 rounded p-4 mb-4">
           <p className="text-yellow-800">
-            Vous avez atteint la limite de {maxCardsPerMonth} cartes pour ce mois.
+            Vous avez atteint la limite de cartes pour ce mois ({maxMajorCards} majeures + {maxCommunicationCards} communication).
             Cliquez sur "Fin du mois" pour continuer.
           </p>
         </div>
@@ -80,14 +95,16 @@ export default function CardDeck({ cards, onPlayCard, cardsPlayedThisMonth, maxC
 
       {/* Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {filteredCards.map(card => (
-          <div
-            key={card.cardId}
-            className={`bg-white border rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow ${
-              !canPlayMoreCards ? 'opacity-50' : 'cursor-pointer'
-            }`}
-            onClick={() => canPlayMoreCards && setSelectedCard(card)}
-          >
+        {filteredCards.map(card => {
+          const cardCanBePlayed = canPlayCard(card);
+          return (
+            <div
+              key={card.cardId}
+              className={`bg-white border rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow ${
+                !cardCanBePlayed ? 'opacity-50' : 'cursor-pointer'
+              }`}
+              onClick={() => cardCanBePlayed && setSelectedCard(card)}
+            >
             <div className="flex justify-between items-start mb-2">
               <h3 className="font-bold">{card.title || card.cardId}</h3>
               <span className="text-xs bg-accent text-white px-2 py-1 rounded">{card.type}</span>
@@ -112,7 +129,8 @@ export default function CardDeck({ cards, onPlayCard, cardsPlayedThisMonth, maxC
               {card.options.length} options disponibles
             </div>
           </div>
-        ))}
+          );
+        })}
       </div>
 
       {filteredCards.length === 0 && (
@@ -127,7 +145,7 @@ export default function CardDeck({ cards, onPlayCard, cardsPlayedThisMonth, maxC
           card={selectedCard}
           onClose={() => setSelectedCard(null)}
           onPlay={handlePlayCard}
-          disabled={!canPlayMoreCards}
+          disabled={!canPlayCard(selectedCard)}
         />
       )}
     </div>

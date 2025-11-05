@@ -1520,6 +1520,272 @@
           ]
         }
       ]
+    },
+    {
+      "cardId": "EVENT_Energy_Spike",
+      "type": "event",
+      "ministries": ["EnergyClimateIndustry", "EconomyFinance"],
+      "title": "Flambée des prix de l'énergie",
+      "description": "Une crise géopolitique provoque une hausse brutale des prix du gaz et de l'électricité.",
+      "options": [
+        {
+          "label": "Subir",
+          "costs": {
+            "eur": 0,
+            "cp": 0,
+            "leg": 0,
+            "rj": 0,
+            "cm": 0
+          },
+          "lags": {
+            "start": 0,
+            "ramp": 0,
+            "duration": 6
+          },
+          "effects": [
+            {
+              "kpiId": "inflation_rate",
+              "delta": 0.8,
+              "interval": {
+                "min": 0.6,
+                "max": 1.2
+              },
+              "confidence": "high",
+              "profile": "step"
+            },
+            {
+              "kpiId": "gdp_growth",
+              "delta": -0.4,
+              "interval": {
+                "min": -0.6,
+                "max": -0.3
+              },
+              "confidence": "med",
+              "profile": "linear"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "EVENT_Interest_Rate_Hike",
+      "type": "event",
+      "ministries": ["EconomyFinance"],
+      "title": "Hausse des taux directeurs (BCE)",
+      "description": "La Banque Centrale Européenne relève ses taux pour lutter contre l'inflation.",
+      "options": [
+        {
+          "label": "Subir",
+          "costs": {
+            "eur": 0,
+            "cp": 0,
+            "leg": 0,
+            "rj": 0,
+            "cm": -5
+          },
+          "lags": {
+            "start": 0,
+            "ramp": 1,
+            "duration": 12
+          },
+          "effects": [
+            {
+              "kpiId": "debt_pct_gdp",
+              "delta": 1.2,
+              "interval": {
+                "min": 0.8,
+                "max": 1.5
+              },
+              "confidence": "high",
+              "profile": "linear"
+            },
+            {
+              "kpiId": "investment_rate",
+              "delta": -0.5,
+              "interval": {
+                "min": -0.7,
+                "max": -0.4
+              },
+              "confidence": "high",
+              "profile": "sigmoid"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "EVENT_Heatwave",
+      "type": "event",
+      "ministries": ["EnergyClimateIndustry", "Health"],
+      "title": "Canicule exceptionnelle",
+      "description": "Des températures records provoquent des tensions sur le réseau électrique et une crise sanitaire.",
+      "options": [
+        {
+          "label": "Subir",
+          "costs": {
+            "eur": 0.5,
+            "cp": -3,
+            "leg": -2,
+            "rj": 0,
+            "cm": 0
+          },
+          "lags": {
+            "start": 0,
+            "ramp": 0,
+            "duration": 3
+          },
+          "effects": [
+            {
+              "kpiId": "life_expectancy",
+              "delta": -0.05,
+              "interval": {
+                "min": -0.08,
+                "max": -0.03
+              },
+              "confidence": "med",
+              "profile": "step"
+            },
+            {
+              "kpiId": "energy_consumption",
+              "delta": 5.0,
+              "interval": {
+                "min": 3.0,
+                "max": 8.0
+              },
+              "confidence": "med",
+              "profile": "step"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "EVENT_Trade_War",
+      "type": "event",
+      "ministries": ["ForeignEU", "EconomyFinance"],
+      "title": "Tensions commerciales internationales",
+      "description": "De nouveaux tarifs douaniers menacent les exportations françaises.",
+      "options": [
+        {
+          "label": "Subir",
+          "costs": {
+            "eur": 0,
+            "cp": 0,
+            "leg": 0,
+            "rj": 0,
+            "cm": -3
+          },
+          "lags": {
+            "start": 1,
+            "ramp": 2,
+            "duration": 9
+          },
+          "effects": [
+            {
+              "kpiId": "exports_pct_gdp",
+              "delta": -2.5,
+              "interval": {
+                "min": -3.5,
+                "max": -1.5
+              },
+              "confidence": "med",
+              "profile": "linear"
+            },
+            {
+              "kpiId": "gdp_growth",
+              "delta": -0.3,
+              "interval": {
+                "min": -0.5,
+                "max": -0.2
+              },
+              "confidence": "med",
+              "profile": "linear"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "EVENT_Cyber_Attack",
+      "type": "event",
+      "ministries": ["DigitalSovereignty", "InteriorJustice"],
+      "title": "Cyberattaque d'envergure",
+      "description": "Une attaque coordonnée cible des infrastructures critiques et des administrations.",
+      "options": [
+        {
+          "label": "Subir",
+          "costs": {
+            "eur": 0.8,
+            "cp": -5,
+            "leg": -3,
+            "rj": 0,
+            "cm": -2
+          },
+          "lags": {
+            "start": 0,
+            "ramp": 0,
+            "duration": 4
+          },
+          "effects": [
+            {
+              "kpiId": "public_trust",
+              "delta": -5.0,
+              "interval": {
+                "min": -8.0,
+                "max": -3.0
+              },
+              "confidence": "high",
+              "profile": "step"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "EVENT_Pandemic_Wave",
+      "type": "event",
+      "ministries": ["Health", "EconomyFinance"],
+      "title": "Nouvelle vague épidémique",
+      "description": "Un nouveau variant provoque une recrudescence des hospitalisations.",
+      "options": [
+        {
+          "label": "Subir",
+          "costs": {
+            "eur": 1.5,
+            "cp": -4,
+            "leg": -2,
+            "rj": 0,
+            "cm": 0
+          },
+          "lags": {
+            "start": 0,
+            "ramp": 1,
+            "duration": 5
+          },
+          "effects": [
+            {
+              "kpiId": "hospital_capacity",
+              "delta": -10.0,
+              "interval": {
+                "min": -15.0,
+                "max": -8.0
+              },
+              "confidence": "med",
+              "profile": "sigmoid"
+            },
+            {
+              "kpiId": "gdp_growth",
+              "delta": -0.6,
+              "interval": {
+                "min": -0.9,
+                "max": -0.4
+              },
+              "confidence": "med",
+              "profile": "linear"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
