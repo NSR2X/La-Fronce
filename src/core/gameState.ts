@@ -19,6 +19,7 @@ import { calculateRiskDamp, calculateAllIPMs, calculateIGG, clamp } from './aggr
 import { applyCausalityRules } from './causality';
 import { checkMidGameCheckpoint, checkTroikaDefeat, checkVictory, evaluateObjective } from './victory';
 import { drawEventCard, applyEventCard } from './events';
+import { updateCountersFromKPIs } from './counters';
 
 /**
  * Create a new game state
@@ -158,6 +159,9 @@ export function advanceMonth(gameState: GameState): GameState {
     currentState.counters.leg
   );
 
+  // Save previous KPIs for counter delta calculations (§10.3)
+  const previousKPIs = [...currentState.kpis];
+
   // Apply effects to KPIs
   let newKPIs = [...currentState.kpis];
 
@@ -183,10 +187,15 @@ export function advanceMonth(gameState: GameState): GameState {
   const balance = newBudget.revenue - newBudget.spending;
   newBudget.debt += Math.abs(balance); // Simplified: deficit adds to debt
 
-  // Natural decay/changes to counters (simplified)
+  // Update counters based on KPI changes (§10.3)
   let newCounters = { ...currentState.counters };
+
+  // Natural decay/recovery
   newCounters.ts = clamp(newCounters.ts - 1, 0, 100); // Slowly decrease tension
   newCounters.cp = clamp(newCounters.cp + 2, 0, 100); // Recover political capital
+
+  // Apply KPI-derived counter updates
+  newCounters = updateCountersFromKPIs(newCounters, newKPIs, previousKPIs);
 
   // Check defeat conditions
   const troikaCheck = checkTroikaDefeat({ ...currentState, currentMonth: newMonth, kpis: newKPIs, budget: newBudget, counters: newCounters });
