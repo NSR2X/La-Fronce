@@ -126,23 +126,69 @@ export default function Report() {
         </div>
       </div>
 
-      {/* Cards Played */}
+      {/* Alertes (Troika Warnings) */}
+      {currentReport.troikaWarnings.length > 0 && (
+        <div className="bg-white shadow-md rounded-lg p-6 mb-6">
+          <h2 className="text-xl font-bold mb-4 text-alert">⚠️ Alertes</h2>
+          <div className="space-y-3">
+            {currentReport.troikaWarnings.map((warning, idx) => (
+              <div key={idx} className="p-3 bg-yellow-50 border-l-4 border-yellow-500 text-yellow-800">
+                {warning}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Journal (Events & Cards Played) */}
       <div className="bg-white shadow-md rounded-lg p-6">
-        <h2 className="text-xl font-bold mb-4">Cartes Jouées ce Mois</h2>
-        {currentReport.cardsPlayed.length === 0 ? (
-          <p className="text-gray-500">Aucune carte jouée ce mois</p>
-        ) : (
-          <ul className="list-disc list-inside space-y-2">
-            {currentReport.cardsPlayed.map((played, idx) => {
-              const card = gameState.cards.find(c => c.cardId === played.cardId);
-              return (
-                <li key={idx}>
-                  {card?.title || card?.cardId} - Option {played.optionIndex + 1}
-                </li>
-              );
-            })}
-          </ul>
+        <h2 className="text-xl font-bold mb-4">Journal du Mois</h2>
+
+        {/* Events */}
+        {currentReport.events.length > 0 && (
+          <div className="mb-6">
+            <h3 className="font-semibold mb-2 text-gray-700">Événements</h3>
+            <div className="space-y-2">
+              {currentReport.events.map((evt, idx) => (
+                <div key={idx} className="p-3 bg-red-50 border-l-4 border-red-500">
+                  <div className="font-semibold text-red-800">{evt}</div>
+                </div>
+              ))}
+            </div>
+          </div>
         )}
+
+        {/* Cards Played */}
+        <div>
+          <h3 className="font-semibold mb-2 text-gray-700">Décisions Prises</h3>
+          {currentReport.cardsPlayed.length === 0 ? (
+            <p className="text-gray-500 italic">Aucune décision prise ce mois</p>
+          ) : (
+            <div className="space-y-2">
+              {currentReport.cardsPlayed.map((played, idx) => {
+                const card = gameState.cards.find(c => c.cardId === played.cardId);
+                const option = card?.options[played.optionIndex];
+                return (
+                  <div key={idx} className="p-3 bg-blue-50 border-l-4 border-blue-500">
+                    <div className="font-semibold text-blue-900">
+                      {card?.title || card?.cardId}
+                    </div>
+                    <div className="text-sm text-blue-700 mt-1">
+                      Option choisie: {option?.label}
+                    </div>
+                    {option && (
+                      <div className="text-xs text-gray-600 mt-2 flex gap-4">
+                        <span>Coût: {option.costs.eur > 0 ? '+' : ''}{option.costs.eur} Md€</span>
+                        <span>CP: -{option.costs.cp}</span>
+                        <span>LEG: -{option.costs.leg}</span>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

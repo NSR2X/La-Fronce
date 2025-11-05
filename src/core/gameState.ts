@@ -252,6 +252,17 @@ export function generateMonthlyReport(gameState: GameState): MonthlyReport {
   // Generate Troika warnings based on thresholds
   const troikaWarnings = generateTroikaWarnings(gameState);
 
+  // Get events from this month (events are cards of type 'event')
+  const eventsThisMonth = cardsPlayedThisMonth
+    .map(pc => {
+      const card = gameState.cards.find(c => c.cardId === pc.cardId);
+      if (card && card.type === 'event') {
+        return card.title || card.cardId;
+      }
+      return null;
+    })
+    .filter(Boolean) as string[];
+
   return {
     month: gameState.currentMonth,
     igg,
@@ -259,7 +270,7 @@ export function generateMonthlyReport(gameState: GameState): MonthlyReport {
     objectivesProgress,
     ministries: ministryIPMs,
     cardsPlayed: cardsPlayedThisMonth,
-    events: [],
+    events: eventsThisMonth,
     budgetSummary: {
       revenue: gameState.budget.revenue,
       spending: gameState.budget.spending,
